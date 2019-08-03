@@ -61,7 +61,7 @@
         var editFlag = [[${@permission.hasPermi('system:networkresource:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:networkresource:remove')}]];
         var prefix = ctx + "system/networkresource";
-
+        var datas = [[${@dict.getType('sys_guangdong_city')}]];
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -88,7 +88,10 @@
 				{
 					field : 'resCity', 
 					title : '资源所在市',
-					sortable: true
+					sortable: true,
+                    formatter:function(value){
+                        return $.table.selectDictLabel(datas, value);
+                    }
 				},
 				{
 					field : 'resTime', 

@@ -15,18 +15,13 @@
                         </li>
 
                         <li>
-                            资源所在市：<input type="text" name="resCity"/>
+                            资源所在市：
+                            <input type="text" name="resCity"/>
                         </li>
-
                         <li>
-                            入网时间：<input type="text" name="resTime"/>
+                            状态：
+                            <input type="text" name="taskStatus"/>
                         </li>
-
-                        <li>
-                            经纬度：<input type="text" name="longitudelatitude"/>
-                        </li>
-
-
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
@@ -39,8 +34,8 @@
         </div>
 
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-            <!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:networkresource:add">-->
-            <!--<i class="fa fa-plus"></i> 添加-->
+            <!--<a class="btn btn-success" onclick="distributeResource()" shiro:hasPermission="system:taskinfo:add">-->
+            <!--<i class="fa fa-plus"></i> 分配资源-->
             <!--</a>-->
             <!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:networkresource:edit">-->
             <!--<i class="fa fa-edit"></i> 修改-->
@@ -63,9 +58,10 @@
     var editFlag = [[${@permission.hasPermi('system:taskinfo:add')}]];
     var removeFlag = [[${@permission.hasPermi('system:taskinfo:remove')}]];
     var prefix = ctx + "system/taskinfo";
+    var datas = [[${@dict.getType('sys_guangdong_city')}]];
 
-    function distributeResource() {
-        url = $.table._option.createUrl;
+    function distributeResource(id) {
+        url = $.table._option.createUrl.replace("{id}", id);
         $.modal.open("分配资源", url);
     }
     function remove(id) {
@@ -78,7 +74,7 @@
     $(function () {
         var options = {
             url: prefix + "/listResource",
-            createUrl: prefix + "/add",
+            createUrl: prefix + "/add/{id}",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
@@ -91,7 +87,7 @@
                 {
                     field: 'resId',
                     title: '资源编号',
-                    visible: false
+                    visible: true
                 },
                 {
                     field: 'resName',
@@ -101,7 +97,10 @@
                 {
                     field: 'resCity',
                     title: '资源所在市',
-                    sortable: true
+                    sortable: true,
+                    formatter:function(value){
+                        return $.table.selectDictLabel(datas, value);
+                    }
 
                 },
                 {
@@ -124,8 +123,11 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="distributeResource()"><i class="fa fa-edit"></i>分配资源</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="remove(\'' + row.resId + '\',\''+row.stagId+'\')"><i class="fa fa-remove"></i>释放资源</a>');
+                        if(row.taskStatus==''||row.taskStatus==null) {
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="distributeResource(\'' + row.resId + '\')"><i class="fa fa-edit"></i>分配资源</a> ');
+                        }else {
+                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="remove(\'' + row.resId + '\',\'' + row.stagId + '\')"><i class="fa fa-remove"></i>释放资源</a>');
+                        }
                         return actions.join('');
                     }
                 }]

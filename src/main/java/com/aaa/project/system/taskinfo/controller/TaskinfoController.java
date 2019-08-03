@@ -3,6 +3,8 @@ package com.aaa.project.system.taskinfo.controller;
 import java.util.List;
 
 import com.aaa.project.system.networkresource.service.INetworkresourceService;
+import com.aaa.project.system.stagnationpoint.domain.Stagnationpoint;
+import com.aaa.project.system.stagnationpoint.service.IStagnationpointService;
 import com.aaa.project.system.taskinfo.mapper.TaskinfoMapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class TaskinfoController extends BaseController
 
 	@Resource
 	private TaskinfoMapper taskinfoMapper;
+
+	@Autowired
+	private IStagnationpointService stagnationpointService;
 
 	/**
 	 * 去到资源分配页面
@@ -105,10 +110,13 @@ public class TaskinfoController extends BaseController
 	/**
 	 * 新增巡检资源关系
 	 */
-	@GetMapping("/add")
-	public String add()
+	@GetMapping("/add/{resId}")
+	public String add(@PathVariable("resId") String resId, ModelMap mmap)
 	{
-	    return prefix + "/add";
+		List<Stagnationpoint> stagnationpoints = stagnationpointService.selectStagnationpointList(null);
+		mmap.put("stagnationpoints",stagnationpoints);
+		mmap.put("resId",resId);
+		return prefix + "/add";
 	}
 	
 	/**
@@ -119,7 +127,7 @@ public class TaskinfoController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Taskinfo taskinfo)
-	{		
+	{
 		return toAjax(taskinfoService.insertTaskinfo(taskinfo));
 	}
 

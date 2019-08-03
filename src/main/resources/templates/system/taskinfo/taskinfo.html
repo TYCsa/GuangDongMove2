@@ -13,13 +13,13 @@
                         <li>
                             驻点编号：<input type="text" name="stagId"/>
                         </li>
-
                         <li>
-                            派发人：<input type="text" name="taskAuthor"/>
-                        </li>
-
-                        <li>
-                            分配状态：<input type="text" name="taskStatus"/>
+                            分配状态：
+                            <select name="taskStatus">
+                                <option value="">---请选择---</option>
+                                <option>已分配</option>
+                                <option>未分配</option>
+                            </select>
                         </li>
 
                         <li>
@@ -71,36 +71,36 @@
             columns: [{
                 checkbox: true
             },
-
-                {
-                    field: 'stagId',
-                    title: '驻点编号',
-                    sortable: true
-                },
-                {
-                    field: 'stagName',
-                    title: '驻点名称',
-                    visible: true
-                },
-                {
-                    field: 'resName',
-                    title: '基站名称',
-                    sortable: true
-                },
-                {
-                    field: 'longitudelatitude',
-                    title: '经纬度',
-                    sortable: true
-                }, {
-                    field: 'taskAuthor',
-                    title: '派发人',
-                    sortable: true
-                },
-                {
-                    field: 'taskStatus',
-                    title: '分配状态',
-                    sortable: true
-                }]
+            {
+                field: 'stagName',
+                title: '驻点名称',
+                visible: true
+            },
+            {
+                field: 'stagId',
+                title: '驻点编号',
+                sortable: true
+            },
+            {
+                field: 'resName',
+                title: '基站名称',
+                sortable: true
+            },
+            {
+                field: 'longitudelatitude',
+                title: '经纬度',
+                sortable: true
+            },
+            {
+                field: 'taskAuthor',
+                title: '派发人',
+                sortable: true
+             },
+             {
+                 field: 'taskStatus',
+                 title: '分配状态',
+                 sortable: true
+            }]
         };
         $.table.init(options);
     });
