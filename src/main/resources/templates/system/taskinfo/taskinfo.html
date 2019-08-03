@@ -3,96 +3,107 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-    
-     <div class="container-div">
-		<div class="row">
-			<div class="col-sm-12 search-collapse">
-				<form id="formId">
-					<div class="select-list">
-						<ul>
-							<li>
-								驻点编号：<input type="text" name="stagId"/>
-							</li>
 
-							<li>
-								派发人：<input type="text" name="taskAuthor"/>
-							</li>
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            驻点编号：<input type="text" name="stagId"/>
+                        </li>
 
-							<li>
-								分配状态：<input type="text" name="taskStatus"/>
-							</li>
+                        <li>
+                            派发人：<input type="text" name="taskAuthor"/>
+                        </li>
 
-							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
-			
-	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:taskinfo:add">-->
-					<!--<i class="fa fa-plus"></i> 添加-->
-				<!--</a>-->
-				<!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:taskinfo:edit">-->
-					<!--<i class="fa fa-edit"></i> 修改-->
-				<!--</a>-->
-				<!--<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:taskinfo:remove">-->
-					<!--<i class="fa fa-remove"></i> 删除-->
-				<!--</a>-->
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:taskinfo:export">
-						<i class="fa fa-download"></i> 导出
-				 </a>
-			</div>
-			<div class="col-sm-12 select-table table-striped">
-				<table id="bootstrap-table" data-mobile-responsive="true"></table>
-			</div>
-		</div>
-	</div>
-    <div th:include="include :: footer"></div>
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:taskinfo:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:taskinfo:remove')}]];
-        var prefix = ctx + "system/taskinfo";
+                        <li>
+                            分配状态：<input type="text" name="taskStatus"/>
+                        </li>
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-				exportUrl: prefix + "/export",
-                modalName: "巡检资源关系",
-				search: false,
-		        showExport: true,
-                columns: [{
-		            checkbox: true
-		        },
-				{
-					field : 'resId', 
-					title : '资源名称',
-					visible: false
-				},
-				{
-					field : 'stagId', 
-					title : '驻点编号',
-					sortable: true
-				},
-				{
-					field : 'taskAuthor', 
-					title : '派发人',
-					sortable: true
-				},
-				{
-					field : 'taskStatus', 
-					title : '分配状态',
-					sortable: true
-				}
-		        ]
-            };
-            $.table.init(options);
-        });
-    </script>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+            <!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:taskinfo:add">-->
+            <!--<i class="fa fa-plus"></i> 添加-->
+            <!--</a>-->
+            <!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:taskinfo:edit">-->
+            <!--<i class="fa fa-edit"></i> 修改-->
+            <!--</a>-->
+            <!--<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:taskinfo:remove">-->
+            <!--<i class="fa fa-remove"></i> 删除-->
+            <!--</a>-->
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:taskinfo:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:taskinfo:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:taskinfo:remove')}]];
+    var prefix = ctx + "system/taskinfo";
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "驻点资源",
+            search: false,
+            showExport: true,
+            columns: [{
+                checkbox: true
+            },
+
+                {
+                    field: 'stagId',
+                    title: '驻点编号',
+                    sortable: true
+                },
+                {
+                    field: 'stagName',
+                    title: '驻点名称',
+                    visible: true
+                },
+                {
+                    field: 'resName',
+                    title: '基站名称',
+                    sortable: true
+                },
+                {
+                    field: 'longitudelatitude',
+                    title: '经纬度',
+                    sortable: true
+                }, {
+                    field: 'taskAuthor',
+                    title: '派发人',
+                    sortable: true
+                },
+                {
+                    field: 'taskStatus',
+                    title: '分配状态',
+                    sortable: true
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
 </body>
 </html>

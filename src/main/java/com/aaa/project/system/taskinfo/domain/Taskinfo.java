@@ -31,6 +31,10 @@ public class Taskinfo extends BaseEntity
 	private String longitudelatitude;
 	/** 驻点编号 */
 	private Integer stagId;
+	/**
+	 * 驻点名称
+	 */
+	private String stagName;
 	/** 派发人 */
 	private String taskAuthor;
 	/** 分配状态 */
@@ -99,6 +103,15 @@ public class Taskinfo extends BaseEntity
 		this.longitudelatitude = longitudelatitude;
 	}
 
+	public String getStagName() {
+		return stagName;
+	}
+
+	public void setStagName(String stagName) {
+		this.stagName = stagName;
+	}
+	
+
 	@Override
 	public String toString() {
 		return "Taskinfo{" +
@@ -107,6 +120,7 @@ public class Taskinfo extends BaseEntity
 				", resCity='" + resCity + '\'' +
 				", longitudelatitude='" + longitudelatitude + '\'' +
 				", stagId=" + stagId +
+				", stagName='" + stagName + '\'' +
 				", taskAuthor='" + taskAuthor + '\'' +
 				", taskStatus='" + taskStatus + '\'' +
 				'}';

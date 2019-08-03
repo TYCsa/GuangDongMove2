@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="Taskinfo" id="TaskinfoResult">
         <result property="resId"    column="res_id"    />
         <result property="stagId"    column="stag_id"    />
+        <result property="stagName"    column="stag_name"    />
         <result property="taskAuthor"    column="task_author"    />
         <result property="taskStatus"    column="task_status"    />
         <result property="resName"    column="res_name"    />
@@ -15,7 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </resultMap>
 	
 	<sql id="selectTaskinfoVo">
-        select res_id, stag_id, task_author, task_status from taskinfo
+--         select res_id, stag_id, task_author, task_status from taskinfo
+        select res_id,task.stag_id as stag_id,task_author,task_status,res_name,longitudelatitude,stag_name
+          from (select t.res_id as res_id,stag_id,task_author,task_status,res_name,longitudelatitude from taskinfo t
+            LEFT JOIN networkresource n on t.res_id=n.res_id) as task left join
+                  stagnationpoint s on task.stag_id=s.stag_id
     </sql>
 	
     <select id="selectTaskinfoList" parameterType="Taskinfo" resultMap="TaskinfoResult">
