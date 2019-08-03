@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-taskinfo-edit" th:object="${taskinfo}">
+            <input id="resId" name="resId" th:field="*{resId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">驻点编号：</label>
+				<div class="col-sm-8">
+					<input id="stagId" name="stagId" th:field="*{stagId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">派发人：</label>
+				<div class="col-sm-8">
+					<input id="taskAuthor" name="taskAuthor" th:field="*{taskAuthor}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">分配状态：</label>
+				<div class="col-sm-8">
+					<input id="taskStatus" name="taskStatus" th:field="*{taskStatus}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/taskinfo"
+		$("#form-taskinfo-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-taskinfo-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

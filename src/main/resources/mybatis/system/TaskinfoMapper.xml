@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.taskinfo.mapper.TaskinfoMapper">
+    
+    <resultMap type="Taskinfo" id="TaskinfoResult">
+        <result property="resId"    column="res_id"    />
+        <result property="stagId"    column="stag_id"    />
+        <result property="taskAuthor"    column="task_author"    />
+        <result property="taskStatus"    column="task_status"    />
+        <result property="resName"    column="res_name"    />
+        <result property="resCity"    column="res_city"    />
+        <result property="longitudelatitude"    column="longitudelatitude"/>
+</resultMap>
+	
+	<sql id="selectTaskinfoVo">
+        select res_id, stag_id, task_author, task_status from taskinfo
+    </sql>
+	
+    <select id="selectTaskinfoList" parameterType="Taskinfo" resultMap="TaskinfoResult">
+        <include refid="selectTaskinfoVo"/>
+        <where>  
+            <if test="resId != null  and resId != '' "> and res_id = #{resId}</if>
+             <if test="stagId != null "> and stag_id = #{stagId}</if>
+             <if test="taskAuthor != null  and taskAuthor != '' "> and task_author = #{taskAuthor}</if>
+             <if test="taskStatus != null  and taskStatus != '' "> and task_status = #{taskStatus}</if>
+         </where>
+    </select>
+    
+    <select id="selectTaskinfoById" parameterType="String" resultMap="TaskinfoResult">
+        <include refid="selectTaskinfoVo"/>
+        where res_id = #{resId}
+    </select>
+    <select id="selectDistributeResource" resultMap="TaskinfoResult">
+        select n.res_id as res_id,res_name,res_city,longitudelatitude,stag_id,task_author,task_status
+         from networkresource n left join taskinfo t on n.res_id=t.res_id where enable=1
+    </select>
+
+    <insert id="insertTaskinfo" parameterType="Taskinfo">
+        insert into taskinfo(res_id,stag_id) values(#{resId},#{stagId})
+		<!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+			<!--<if test="resId != null  and resId != ''  ">res_id,</if>-->
+			<!--<if test="stagId != null  ">stag_id,</if>-->
+			<!--<if test="taskAuthor != null  and taskAuthor != ''  ">task_author,</if>-->
+			<!--<if test="taskStatus != null  and taskStatus != ''  ">task_status,</if>-->
+         <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+			<!--<if test="resId != null  and resId != ''  ">#{resId},</if>-->
+			<!--<if test="stagId != null  ">#{stagId},</if>-->
+			<!--<if test="taskAuthor != null  and taskAuthor != ''  ">#{taskAuthor},</if>-->
+			<!--<if test="taskStatus != null  and taskStatus != ''  ">#{taskStatus},</if>-->
+         <!--</trim>-->
+    </insert>
+	 
+    <update id="updateTaskinfo" parameterType="Taskinfo">
+        update taskinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stagId != null  ">stag_id = #{stagId},</if>
+            <if test="taskAuthor != null  and taskAuthor != ''  ">task_author = #{taskAuthor},</if>
+            <if test="taskStatus != null  and taskStatus != ''  ">task_status = #{taskStatus},</if>
+        </trim>
+        where res_id = #{resId}
+    </update>
+
+	<delete id="deleteTaskinfoById" parameterType="String">
+        delete from taskinfo where res_id = #{resId}
+    </delete>
+	
+    <delete id="deleteTaskinfoByIds" parameterType="String">
+        delete from taskinfo where res_id in 
+        <foreach item="resId" collection="array" open="(" separator="," close=")">
+            #{resId}
+        </foreach>
+    </delete>
+    
+</mapper>

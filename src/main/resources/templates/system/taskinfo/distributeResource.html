@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            资源名称：<input type="text" name="resName"/>
+                        </li>
+
+                        <li>
+                            资源所在市：<input type="text" name="resCity"/>
+                        </li>
+
+                        <li>
+                            入网时间：<input type="text" name="resTime"/>
+                        </li>
+
+                        <li>
+                            经纬度：<input type="text" name="longitudelatitude"/>
+                        </li>
+
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+            <!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:networkresource:add">-->
+            <!--<i class="fa fa-plus"></i> 添加-->
+            <!--</a>-->
+            <!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:networkresource:edit">-->
+            <!--<i class="fa fa-edit"></i> 修改-->
+            <!--</a>-->
+            <!--<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:networkresource:remove">-->
+            <!--<i class="fa fa-remove"></i> 删除-->
+            <!--</a>-->
+            <a class="btn btn-warning" onclick="$.table.exportExcel()"
+               shiro:hasPermission="system:networkresource:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:taskinfo:add')}]];
+    var removeFlag = [[${@permission.hasPermi('system:taskinfo:remove')}]];
+    var prefix = ctx + "system/taskinfo";
+
+    function distributeResource() {
+        url = $.table._option.createUrl;
+        $.modal.open("分配资源", url);
+    }
+    function remove(id) {
+        $.modal.confirm("确定要释放该资源吗？", function() {
+            var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
+            var data = { "ids": id };
+            $.operate.submit(url, "post", "json", data);
+        });
+    }
+    $(function () {
+        var options = {
+            url: prefix + "/listResource",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "基站分配",
+            search: false,
+            showExport: true,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'resId',
+                    title: '资源编号',
+                    visible: false
+                },
+                {
+                    field: 'resName',
+                    title: '资源名称',
+                    sortable: true
+                },
+                {
+                    field: 'resCity',
+                    title: '资源所在市',
+                    sortable: true
+
+                },
+                {
+                    field: 'longitudelatitude',
+                    title: '经纬度',
+                    sortable: true
+                },
+                {
+                    field: 'stagId',
+                    title: '代维驻点编号',
+                    sortable: true
+                },
+                {
+                    field: 'taskStatus',
+                    title: '分配状态',
+                    sortable: true
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="distributeResource()"><i class="fa fa-edit"></i>分配资源</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="remove(\'' + row.resId + '\',\''+row.stagId+'\')"><i class="fa fa-remove"></i>释放资源</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

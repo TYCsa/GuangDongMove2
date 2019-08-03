@@ -26,7 +26,7 @@ public interface NetworkresourceMapper
      * @return 网络资源集合
      */
 	public List<Networkresource> selectNetworkresourceList(Networkresource networkresource);
-	
+
 	/**
      * 新增网络资源
      * 
