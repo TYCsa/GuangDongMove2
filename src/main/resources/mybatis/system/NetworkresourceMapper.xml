@@ -68,11 +68,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
 	<delete id="deleteNetworkresourceById" parameterType="String">
-        delete from networkresource where res_id = #{resId}
+         update  networkresource  set enable=0 where res_id = #{resId}
     </delete>
 	
     <delete id="deleteNetworkresourceByIds" parameterType="String">
-        delete from networkresource where res_id in 
+        /*delete from networkresource where res_id in */
+        update  networkresource  set enable=0 where res_id in
         <foreach item="resId" collection="array" open="(" separator="," close=")">
             #{resId}
         </foreach>

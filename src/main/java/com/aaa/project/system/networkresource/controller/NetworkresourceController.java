@@ -52,6 +52,7 @@ public class NetworkresourceController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(Networkresource networkresource)
 	{
+		networkresource.setEnable(1);
 		startPage();
         List<Networkresource> list = networkresourceService.selectNetworkresourceList(networkresource);
 		return getDataTable(list);
@@ -93,6 +94,7 @@ public class NetworkresourceController extends BaseController
 		networkresource.setResId(UUID.randomUUID().toString());
 		//设置时间，获取当时时间
 		networkresource.setResTime(new Date());
+		networkresource.setEnable(1);
 		return toAjax(networkresourceService.insertNetworkresource(networkresource));
 	}
 
