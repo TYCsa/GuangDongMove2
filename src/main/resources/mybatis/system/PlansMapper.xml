@@ -43,7 +43,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPlansVo"/>
         where plan_id = #{planId}
     </select>
-        
+
+    <select id="findAllList" resultType="java.util.Map" parameterType="string">
+        select plan_id, plan_name, plan_author, res_id, stag_id, template_id from plans where plan_result='2'
+    </select>
+
     <insert id="insertPlans" parameterType="Plans">
         insert into plans
 		<trim prefix="(" suffix=")" suffixOverrides=",">

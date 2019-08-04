@@ -132,3 +132,7 @@ gen:
   # 表前缀(类名不会包含表前缀)
   tablePrefix: sys_
 
+#配置文件上传的路径
+upload:
+  uploadStationImape: D:\IDEworkspace\GuangDongMove2\src\main\resources\static\fileupload\station
+

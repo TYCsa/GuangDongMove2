@@ -31,7 +31,12 @@ public class PlanServiceImpl implements IPlanService
 	{
 	    return planMapper.selectPlanById(id);
 	}
-	
+
+	@Override
+	public List<Plan> findAllList() {
+		return planMapper.findAllList();
+	}
+
 	/**
      * 查询计划列表
      * 

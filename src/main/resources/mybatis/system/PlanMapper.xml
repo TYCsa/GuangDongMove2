@@ -45,7 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPlanVo"/>
         where id = #{id}
     </select>
-        
+    <select id="findAllList" resultType="com.aaa.project.system.plan.domain.Plan">
+        select id, name, make_time, stationary_point, check_count, type, duty_man, duty_time, check_man, check_time, cause from plan where status=2
+    </select>
+
     <insert id="insertPlan" parameterType="Plan" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
         insert into plan
 		<trim prefix="(" suffix=")" suffixOverrides=",">

@@ -26,7 +26,8 @@ public interface PlanfacilityMapper
      * @return 计划_设备集合
      */
 	public List<Planfacility> selectPlanfacilityList(Planfacility planfacility);
-	
+
+
 	/**
      * 新增计划_设备
      * 

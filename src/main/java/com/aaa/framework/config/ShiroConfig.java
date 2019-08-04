@@ -249,11 +249,12 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         filterChainDefinitionMap.put("/system/emp/login","anon");
         filterChainDefinitionMap.put("/system/emp/list","anon");
-        filterChainDefinitionMap.put("/system/plans/list","anon");
+        filterChainDefinitionMap.put("/system/plans/findAllList","anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/api/**","anon");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

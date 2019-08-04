@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-faultinfo-edit" th:object="${faultinfo}">
+            <input id="faultId" name="faultId" th:field="*{faultId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">资源id号：</label>
+				<div class="col-sm-8">
+					<input id="resId" name="resId" th:field="*{resId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">隐患发现时间：</label>
+				<div class="col-sm-8">
+					<input id="faultTime" name="faultTime" th:field="*{faultTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">隐患发现者工号：</label>
+				<div class="col-sm-8">
+					<input id="empno" name="empno" th:field="*{empno}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">规范编号：</label>
+				<div class="col-sm-8">
+					<input id="standardId" name="standardId" th:field="*{standardId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">发现地址：</label>
+				<div class="col-sm-8">
+					<input id="address" name="address" th:field="*{address}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">严重程度：</label>
+				<div class="col-sm-8">
+					<input id="severity" name="severity" th:field="*{severity}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">图片：</label>
+				<div class="col-sm-8">
+					<input id="picture" name="picture" th:field="*{picture}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">问题描述：</label>
+				<div class="col-sm-8">
+					<input id="problem" name="problem" th:field="*{problem}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/faultinfo"
+		$("#form-faultinfo-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-faultinfo-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

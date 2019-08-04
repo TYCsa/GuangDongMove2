@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPlanfacilityVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertPlanfacility" parameterType="Planfacility">
         insert into planfacility
 		<trim prefix="(" suffix=")" suffixOverrides=",">
