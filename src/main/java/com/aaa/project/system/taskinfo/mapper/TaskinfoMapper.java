@@ -29,7 +29,28 @@ public interface TaskinfoMapper
      */
 	public List<Taskinfo> selectTaskinfoList(Taskinfo taskinfo);
 
+	/**
+	 * 查看分配资源
+	 * @param taskinfo
+	 * @return
+	 */
 	public List<Taskinfo> selectDistributeResource(Taskinfo taskinfo);
+
+
+	/**
+	 * 分配资源，巡检资源数量加1
+	 * @param stagId
+	 * @return
+	 */
+	public int addStagCountById(Integer stagId);
+
+	/**
+	 * 释放资源，巡检资源数量减1
+	 * @param stagId
+	 * @return
+	 */
+	public int subtractStagCountById(Integer stagId);
+
 	/**
      * 新增巡检资源关系
      * 
@@ -61,5 +82,6 @@ public interface TaskinfoMapper
      * @return 结果
      */
 	public int deleteTaskinfoByIds(String[] resIds);
+
 	
 }

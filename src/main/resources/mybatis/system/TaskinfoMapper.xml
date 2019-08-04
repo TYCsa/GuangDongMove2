@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="resId != null  and resId != '' "> and res_id = #{resId}</if>
              <if test="stagId != null "> and task.stag_id = #{stagId}</if>
+             <if test="stagName != null "> and stag_name = #{stag_name}</if>
              <if test="taskAuthor != null  and taskAuthor != '' "> and task_author = #{taskAuthor}</if>
              <if test="taskStatus != null  and taskStatus != '' "> and task_status = #{taskStatus}</if>
          </where>
@@ -76,7 +77,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where res_id = #{resId}
     </update>
 
-	<delete id="deleteTaskinfoById" parameterType="String">
+    <update id="addStagCountById">
+        update stagnationpoint set stag_count=stag_count+1 where stag_id = #{stagId}
+    </update>
+
+    <update id="subtractStagCountById">
+        update stagnationpoint set stag_count=stag_count-1 where stag_id = #{stagId}
+    </update>
+
+    <delete id="deleteTaskinfoById" parameterType="String">
         delete from taskinfo where res_id = #{resId}
     </delete>
 	

@@ -9,6 +9,7 @@ import com.aaa.project.system.taskinfo.mapper.TaskinfoMapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class TaskinfoController extends BaseController
 
 	@Resource
 	private TaskinfoMapper taskinfoMapper;
+
 
 	@Autowired
 	private IStagnationpointService stagnationpointService;
@@ -108,7 +110,7 @@ public class TaskinfoController extends BaseController
     }
 	
 	/**
-	 * 新增巡检资源关系
+	 * 去到分配资源的页面
 	 */
 	@GetMapping("/add/{resId}")
 	public String add(@PathVariable("resId") String resId, ModelMap mmap)
@@ -120,14 +122,17 @@ public class TaskinfoController extends BaseController
 	}
 	
 	/**
-	 * 新增保存巡检资源关系
+	 * 保存分配的资源
 	 */
 	@RequiresPermissions("system:taskinfo:add")
 	@Log(title = "巡检资源关系", businessType = BusinessType.INSERT)
+	@Transactional
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Taskinfo taskinfo)
 	{
+		Integer stagId = taskinfo.getStagId();
+		taskinfoMapper.addStagCountById(stagId);
 		return toAjax(taskinfoService.insertTaskinfo(taskinfo));
 	}
 
@@ -143,7 +148,7 @@ public class TaskinfoController extends BaseController
 	}
 	
 	/**
-	 * 修改保存巡检资源关系
+	 * 修改保存巡检资源关系,同时为对应驻点的巡检资源数量加一
 	 */
 	@RequiresPermissions("system:taskinfo:edit")
 	@Log(title = "巡检资源关系", businessType = BusinessType.UPDATE)
@@ -155,14 +160,19 @@ public class TaskinfoController extends BaseController
 	}
 	
 	/**
-	 * 释放分配的资源
+	 * 释放分配的资源，同时让对应的驻点巡检资源数量减去1
 	 */
 	@RequiresPermissions("system:taskinfo:remove")
 	@Log(title = "巡检资源关系", businessType = BusinessType.DELETE)
+	@Transactional
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
+	{
+
+		Taskinfo taskinfo = taskinfoMapper.selectTaskinfoById(ids);
+		Integer stagId = taskinfo.getStagId();
+		taskinfoMapper.subtractStagCountById(stagId);
 		return toAjax(taskinfoMapper.deleteTaskinfoById(ids));
 	}
 	
