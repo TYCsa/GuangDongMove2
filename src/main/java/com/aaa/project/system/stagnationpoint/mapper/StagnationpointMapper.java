@@ -42,7 +42,7 @@ public interface StagnationpointMapper
      * @return 结果
      */
 	public int updateStagnationpoint(Stagnationpoint stagnationpoint);
-	
+
 	/**
      * 删除驻点管理
      * 

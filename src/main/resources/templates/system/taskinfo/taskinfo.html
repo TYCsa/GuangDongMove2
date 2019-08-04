@@ -14,15 +14,6 @@
                             驻点编号：<input type="text" name="stagId"/>
                         </li>
                         <li>
-                            分配状态：
-                            <select name="taskStatus">
-                                <option value="">---请选择---</option>
-                                <option>已分配</option>
-                                <option>未分配</option>
-                            </select>
-                        </li>
-
-                        <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
                             <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
@@ -98,7 +89,7 @@
              },
              {
                  field: 'taskStatus',
-                 title: '分配状态',
+                 title: '巡检状态',
                  sortable: true
             }]
         };
