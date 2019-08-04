@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.planfacility.mapper.PlanfacilityMapper">
+    
+    <resultMap type="Planfacility" id="PlanfacilityResult">
+        <result property="id"    column="id"    />
+        <result property="facilityId"    column="facility_id"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="status"    column="status"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="planTime"    column="plan_time"    />
+        <result property="dutyMan"    column="duty_man"    />
+        <result property="url"    column="url"    />
+        <association property="plan" javaType="plan">
+            <id column="plan_id" property="id"></id>
+            <result property="name"    column="pnam"    />
+            <result property="makeTime"    column="pmaketime"    />
+            <result property="stationaryPoint"    column="pstp"    />
+            <result property="checkCount"    column="check_count"    />
+            <result property="checkTime"    column="check_time"    />
+        </association>
+        <association property="networkresource" javaType="networkresource">
+            <id property="resId" column="facility_id"/>
+            <result property="resName" column="fname"/>
+            <result property="longitudelatitude" column="longitudelatitude"/>
+        </association>
+    </resultMap>
+	
+	<sql id="selectPlanfacilityVo">
+        SELECT * FROM (SELECT
+                  pf.id,
+                  pf.facility_id,
+                  pf.plan_id,
+                  pf.status,
+                  pf.sign_time,
+                  pf.plan_time,
+                  pf.duty_man,
+                  pf.url,
+                  p.name                pname,
+                  p.make_time           pmaketime,
+                  p.stationary_point    pstp,
+                  p.check_count,
+                  p.check_time,
+                  p.cause,
+                  f.res_name                fname,
+                  f.longitudelatitude
+                FROM plan p,
+                  planfacility pf,
+                  networkresource f
+                WHERE p.id = pf.plan_id
+                    AND f.res_id = pf.facility_id AND ENABLE=1) planfacility
+    </sql>
+	
+    <select id="selectPlanfacilityList" parameterType="Planfacility" resultMap="PlanfacilityResult">
+        <include refid="selectPlanfacilityVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="facilityId != null "> and facility_id = #{facilityId}</if>
+             <if test="planId != null "> and plan_id = #{planId}</if>
+             <if test="status != null "> and status = #{status}</if>
+             <if test="signTime != null "> and sign_time = #{signTime}</if>
+             <if test="planTime != null "> and plan_time = #{planTime}</if>
+             <if test="dutyMan != null  and dutyMan != '' "> and duty_man = #{dutyMan}</if>
+             <if test="url != null  and url != '' "> and url = #{url}</if>
+         </where>
+    </select>
+    
+    <select id="selectPlanfacilityById" parameterType="Integer" resultMap="PlanfacilityResult">
+        <include refid="selectPlanfacilityVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPlanfacility" parameterType="Planfacility">
+        insert into planfacility
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="facilityId != null  ">facility_id,</if>
+			<if test="planId != null  ">plan_id,</if>
+			<if test="status != null  ">status,</if>
+			<if test="signTime != null  ">sign_time,</if>
+			<if test="planTime != null  ">plan_time,</if>
+			<if test="dutyMan != null  and dutyMan != ''  ">duty_man,</if>
+			<if test="url != null  and url != ''  ">url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="facilityId != null  ">#{facilityId},</if>
+			<if test="planId != null  ">#{planId},</if>
+			<if test="status != null  ">#{status},</if>
+			<if test="signTime != null  ">#{signTime},</if>
+			<if test="planTime != null  ">#{planTime},</if>
+			<if test="dutyMan != null  and dutyMan != ''  ">#{dutyMan},</if>
+			<if test="url != null  and url != ''  ">#{url},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePlanfacility" parameterType="Planfacility">
+        update planfacility
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="facilityId != null  ">facility_id = #{facilityId},</if>
+            <if test="planId != null  ">plan_id = #{planId},</if>
+            <if test="status != null  ">status = #{status},</if>
+            <if test="signTime != null  ">sign_time = #{signTime},</if>
+            <if test="planTime != null  ">plan_time = #{planTime},</if>
+            <if test="dutyMan != null  and dutyMan != ''  ">duty_man = #{dutyMan},</if>
+            <if test="url != null  and url != ''  ">url = #{url},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deletePlanfacilityById" parameterType="Integer">
+        delete from planfacility where id = #{id}
+    </delete>
+	
+    <delete id="deletePlanfacilityByIds" parameterType="String">
+        delete from planfacility where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

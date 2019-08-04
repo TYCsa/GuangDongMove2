@@ -14,7 +14,7 @@ import com.aaa.common.support.Convert;
  * @author toneySong
  * @date 2019-08-02
  */
-@Service
+@Service("networkresourceServiceImpl")
 public class NetworkresourceServiceImpl implements INetworkresourceService 
 {
 	@Autowired

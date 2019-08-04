@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-plan-edit" th:object="${plan}">
+            <input id="id" name="id" th:value="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text" disabled="disabled">
+				</div>
+			</div>
+
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+	<script th:inline="javascript">
+		var prefix = ctx + "system/planfacility";
+
+		$(function () {
+			var options = {
+				url: prefix + "/list?planId=" + document.getElementById("id").value,
+				columns: [{
+					field: 'id',
+					title: '编号',
+					visible: false
+				},
+					{
+						field: 'networkresource',
+						title: '名称',
+						formatter:function (value) {
+							return value.resName;
+						}
+					},
+					{
+						field: 'networkresource',
+						title: '经纬度',
+						formatter:function (value) {
+							return value.longitudelatitude;
+						}
+					},
+					{
+						field: 'planTime',
+						title: '巡检时间'
+					},
+					{
+						field: 'status',
+						title: '状态',
+						formatter:function (value) {
+							switch (value) {
+								case 0:
+									return "未分配";
+								case 1:
+									return "未巡检";
+								case 2:
+									return "已巡检";
+								case 3:
+									return "隐患";
+							}
+						}
+					}]
+			};
+			$.table.init(options);
+		});
+	</script>
+</body>
+</html>

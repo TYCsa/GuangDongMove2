@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link th:href='@{/fullcalendar/packages/core/main.css}' rel='stylesheet' />
+<link th:href='@{/fullcalendar/packages/daygrid/main.css}' rel='stylesheet' />
+<link th:href='@{/fullcalendar/packages/timegrid/main.css}' rel='stylesheet' />
+<link th:href='@{/fullcalendar/packages/list/main.css}' rel='stylesheet' />
+<script th:src='@{/fullcalendar/packages/core/main.js}'></script>
+<script th:src='@{/fullcalendar/packages/interaction/main.js}'></script>
+<script th:src='@{/fullcalendar/packages/daygrid/main.js}'></script>
+<script th:src='@{/fullcalendar/packages/timegrid/main.js}'></script>
+<script th:src='@{/fullcalendar/packages/list/main.js}'></script>
+<script>
+	var datetime;
+	var id;
+	var arr = [];
+	document.addEventListener('DOMContentLoaded', function() {
+		var Calendar = FullCalendar.Calendar;
+		var Draggable = FullCalendarInteraction.Draggable
+
+
+
+		var containerEl = document.getElementById('external-events-list');
+		new Draggable(containerEl, {
+			itemSelector: '.fc-event',
+			eventData: function(eventEl) {
+				return {
+					title: eventEl.innerText.trim()
+				}
+			}
+		});
+
+
+
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new Calendar(calendarEl, {
+			plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
+			header: {
+				left: '',
+				center: 'title',
+				right: ''
+			},
+			defaultDate: document.getElementById("makeTime").value,
+			editable: true,
+			droppable: true, // this allows things to be dropped onto the calendar
+			drop: function(arg) {
+				arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+				datetime = new Date(arg.dateStr);
+				id = arg.draggedEl.id;
+				arr.push({
+					id: id,
+					planTime: datetime
+				});
+			},
+			eventDrop: function(e) {
+				datetime.setDate(datetime.getDate() + e.delta.days);
+				for(var i = 0; i < arr.length; i++) {
+					if(arr[i].id == id) {
+						arr[i] = {
+							id: id,
+							planTime: datetime
+						};
+					}
+				}
+			}
+		});
+		calendar.render();
+
+	});
+</script>
+<style>
+	body {
+		margin-top: 40px;
+		font-size: 14px;
+		font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+	}
+
+	#wrap {
+		width: 1100px;
+		margin: 0 auto;
+	}
+
+	#external-events {
+		float: left;
+		width: 150px;
+		padding: 0 10px;
+		border: 1px solid #ccc;
+		background: #eee;
+		text-align: left;
+	}
+
+	#external-events h4 {
+		font-size: 16px;
+		margin-top: 0;
+		padding-top: 1em;
+	}
+
+	#external-events .fc-event {
+		margin: 10px 0;
+		cursor: pointer;
+	}
+
+	#external-events p {
+		margin: 1.5em 0;
+		font-size: 11px;
+		color: #666;
+	}
+
+	#external-events p input {
+		margin: 0;
+		vertical-align: middle;
+	}
+
+	#calendar {
+		float: right;
+		width: 900px;
+	}
+</style>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-plan-edit" th:object="${plan}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text" disabled="disabled">
+					<input id="makeTime" name="makeTime" th:field="${plan.makeTime}" th:value="${plan.makeTime}" class="form-control" type="hidden">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div id='wrap'>
+					<div id='external-events'>
+						<h4>站点</h4>
+						<div id='external-events-list'>
+							<div class='fc-event' th:each="planfacility:${planfacilities}" th:id="${planfacility.id}" th:text="${planfacility.networkresource.resName}"></div>
+						</div>
+					</div>
+					<div id='calendar'></div>
+					<div style='clear:both'></div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-12 col-sm-offset-3">
+						<button onclick="submitHandler()" class="btn btn-primary">提交</button>
+						<button onclick="$.modal.close()" class="btn btn-danger" type="button">关闭</button>
+					</div>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/planfacility";
+		function save(url, data) {
+			$.modal.loading("正在处理中，请稍后...");
+			var config = {
+				url: url,
+				type: "post",
+				dataType: "json",
+				contentType:"application/json;charset=UTF-8",
+				data: data,
+				success: function(result) {
+					$.operate.successCallback(result);
+				}
+			};
+			$.ajax(config)
+		}
+
+		function submitHandler() {
+	        /*if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-plan-edit').serialize());
+	        }*/
+	        for (var i = 0;i<arr.length;i++){
+	        	arr[i].planTime = new Date(arr[i].planTime.getTime()).format("yyyy-MM-dd");
+			}
+	        //console.log(JSON.stringify(arr));
+			save(prefix + "/edits", JSON.stringify(arr));
+			$.modal.close();
+	    }
+
+
+
+		Date.prototype.format = function(fmt) {
+			var o = {
+				"M+" : this.getMonth()+1,                 //月份
+				"d+" : this.getDate(),                    //日
+				"h+" : this.getHours(),                   //小时
+				"m+" : this.getMinutes(),                 //分
+				"s+" : this.getSeconds(),                 //秒
+				"q+" : Math.floor((this.getMonth()+3)/3), //季度
+				"S"  : this.getMilliseconds()             //毫秒
+			};
+			if(/(y+)/.test(fmt)) {
+				fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+			}
+			for(var k in o) {
+				if(new RegExp("("+ k +")").test(fmt)){
+					fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+				}
+			}
+			return fmt;
+		}
+	</script>
+</body>
+</html>

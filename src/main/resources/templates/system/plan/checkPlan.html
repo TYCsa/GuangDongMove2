@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								制定时间：<input type="text" name="makeTime"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:plan:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:plan:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:plan:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:plan:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:plan:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:plan:remove')}]];
+        var prefix = ctx + "system/plan";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                checkUrl: prefix + "/checkEdit/{id}",
+				queryParams: queryParams,
+                modalName: "计划",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '编号',
+					visible: false
+				},
+				{
+					field : 'name', 
+					title : '名称'
+				},
+				{
+					field : 'makeTime', 
+					title : '制定时间',
+					sortable: true
+				},
+				{
+					field : 'stationaryPoint', 
+					title : '驻点',
+					formatter:function (value) {
+						var datas = [[${@stagnationpointServiceImpl.selectStagnationpointList(null)}]];
+						for(var i = 0;i<datas.length;i++){
+							if(datas[i].stagId == value){
+								return datas[i].stagName;
+							}
+						}
+					}
+				},
+				{
+					field : 'checkCount', 
+					title : '巡检数量',
+					sortable: true
+				},
+				{
+					field : 'status', 
+					title : '状态',
+					sortable: true,
+					formatter:function (value) {
+						switch (value) {
+							case 1:
+								return "未审核";
+							case 2:
+								return "通过";
+							case 3:
+								return "失败";
+						}
+					}
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	switch (row.status) {
+							case 1:
+								actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="check(\'' + row.id + '\')"><i class="fa fa-edit"></i>审核计划</a> ');
+								break;
+						}
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+			function queryParams(params) {
+				var search = $.table.queryParams(params);
+				search.status = 0;
+				return search;
+			}
+        });
+
+
+		function check(id) {
+			var url = "/404.html";
+			if ($.common.isNotEmpty(id)) {
+				url = $.table._option.checkUrl.replace("{id}", id);
+			} else {
+				var row = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+				url = $.table._option.checkUrl.replace("{id}", row);
+			}
+			$.modal.open("审核" + $.table._option.modalName, url);
+		}
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.plan.mapper.PlanMapper">
+    
+    <resultMap type="Plan" id="PlanResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="makeTime"    column="make_time"    />
+        <result property="stationaryPoint"    column="stationary_point"    />
+        <result property="checkCount"    column="check_count"    />
+        <result property="status"    column="status"    />
+        <result property="type"    column="type"    />
+        <result property="dutyMan"    column="duty_man"    />
+        <result property="dutyTime"    column="duty_time"    />
+        <result property="checkMan"    column="check_man"    />
+        <result property="checkTime"    column="check_time"    />
+        <result property="cause"    column="cause"    />
+    </resultMap>
+	
+	<sql id="selectPlanVo">
+        select id, name, make_time, stationary_point, check_count, status, type, duty_man, duty_time, check_man, check_time, cause from plan
+    </sql>
+	
+    <select id="selectPlanList" parameterType="Plan" resultMap="PlanResult">
+        <include refid="selectPlanVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="makeTime != null  and makeTime != '' "> and make_time = #{makeTime}</if>
+             <if test="stationaryPoint != null "> and stationary_point = #{stationaryPoint}</if>
+             <if test="checkCount != null "> and check_count = #{checkCount}</if>
+             <if test="status != null "> and not (status = #{status})</if>
+             <if test="type != null "> and type = #{type}</if>
+             <if test="dutyMan != null  and dutyMan != '' "> and duty_man = #{dutyMan}</if>
+             <if test="dutyTime != null "> and duty_time = #{dutyTime}</if>
+             <if test="checkMan != null  and checkMan != '' "> and check_man = #{checkMan}</if>
+             <if test="checkTime != null "> and check_time = #{checkTime}</if>
+             <if test="cause != null  and cause != '' "> and cause = #{cause}</if>
+         </where>
+    </select>
+    
+    <select id="selectPlanById" parameterType="Integer" resultMap="PlanResult">
+        <include refid="selectPlanVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPlan" parameterType="Plan" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into plan
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="makeTime != null  and makeTime != ''  ">make_time,</if>
+			<if test="stationaryPoint != null  ">stationary_point,</if>
+			<if test="checkCount != null  ">check_count,</if>
+			<if test="status != null  ">status,</if>
+			<if test="type != null  ">type,</if>
+			<if test="dutyMan != null  and dutyMan != ''  ">duty_man,</if>
+			<if test="dutyTime != null  ">duty_time,</if>
+			<if test="checkMan != null  and checkMan != ''  ">check_man,</if>
+			<if test="checkTime != null  ">check_time,</if>
+			<if test="cause != null  and cause != ''  ">cause,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="makeTime != null  and makeTime != ''  ">#{makeTime},</if>
+			<if test="stationaryPoint != null  ">#{stationaryPoint},</if>
+			<if test="checkCount != null  ">#{checkCount},</if>
+			<if test="status != null  ">#{status},</if>
+			<if test="type != null  ">#{type},</if>
+			<if test="dutyMan != null  and dutyMan != ''  ">#{dutyMan},</if>
+			<if test="dutyTime != null  ">#{dutyTime},</if>
+			<if test="checkMan != null  and checkMan != ''  ">#{checkMan},</if>
+			<if test="checkTime != null  ">#{checkTime},</if>
+			<if test="cause != null  and cause != ''  ">#{cause},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePlan" parameterType="Plan">
+        update plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="makeTime != null  and makeTime != ''  ">make_time = #{makeTime},</if>
+            <if test="stationaryPoint != null  ">stationary_point = #{stationaryPoint},</if>
+            <if test="checkCount != null  ">check_count = #{checkCount},</if>
+            <if test="status != null  ">status = #{status},</if>
+            <if test="type != null  ">type = #{type},</if>
+            <if test="dutyMan != null  and dutyMan != ''  ">duty_man = #{dutyMan},</if>
+            <if test="dutyTime != null  ">duty_time = #{dutyTime},</if>
+            <if test="checkMan != null  and checkMan != ''  ">check_man = #{checkMan},</if>
+            <if test="checkTime != null  ">check_time = #{checkTime},</if>
+            <if test="cause != null  and cause != ''  ">cause = #{cause},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deletePlanById" parameterType="Integer">
+        delete from plan where id = #{id}
+    </delete>
+	
+    <delete id="deletePlanByIds" parameterType="String">
+        delete from plan where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

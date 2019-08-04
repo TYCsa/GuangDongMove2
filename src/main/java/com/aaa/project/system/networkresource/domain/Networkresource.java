@@ -28,7 +28,17 @@ public class Networkresource extends BaseEntity
 	/** 是否禁用 */
 	private Integer enable;
 
-	public void setResId(String resId) 
+	private Integer status;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setResId(String resId)
 	{
 		this.resId = resId;
 	}
