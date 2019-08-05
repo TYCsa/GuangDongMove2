@@ -40,6 +40,7 @@ public class PlanfacilityController extends BaseController
 	@GetMapping()
 	public String planfacility()
 	{
+
 	    return prefix + "/planfacility";
 	}
 	

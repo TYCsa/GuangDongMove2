@@ -11,33 +11,12 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								设备编号：<input type="text" name="facilityId"/>
+								状态：<select id="status" name="status" class="form-control">
+									<option value="1">未巡检</option>
+									<option value="2">已巡检</option>
+									<option value="3">异常</option>
+								</select>
 							</li>
-
-							<li>
-								计划编号：<input type="text" name="planId"/>
-							</li>
-
-							<li>
-								状态(0正常,1异常)：<input type="text" name="status"/>
-							</li>
-
-							<li>
-								签到时间：<input type="text" name="signTime"/>
-							</li>
-
-							<li>
-								计划时间：<input type="text" name="planTime"/>
-							</li>
-
-							<li>
-								巡检员：<input type="text" name="dutyMan"/>
-							</li>
-
-							<li>
-								图片路径：<input type="text" name="url"/>
-							</li>
-
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -48,15 +27,6 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:planfacility:add">
-					<i class="fa fa-plus"></i> 添加
-				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:planfacility:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:planfacility:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
 				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:planfacility:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
@@ -91,19 +61,33 @@
 					visible: false
 				},
 				{
-					field : 'facilityId', 
-					title : '设备编号',
-					sortable: true
+					field : 'networkresource',
+					title : '站点',
+					formatter:function (value) {
+						return value.resName;
+					}
 				},
 				{
-					field : 'planId', 
-					title : '计划编号',
-					sortable: true
+					field : 'plan',
+					title : '计划',
+					formatter:function (value) {
+						return value.name;
+					}
 				},
 				{
 					field : 'status', 
-					title : '状态(0正常,1异常)',
-					sortable: true
+					title : '状态',
+					sortable: true,
+					formatter:function (value) {
+						switch (value) {
+							case 1:
+								return "未巡检";
+							case 2:
+								return "已巡检";
+							case 3:
+								return "异常";
+						}
+					}
 				},
 				{
 					field : 'signTime', 
@@ -120,18 +104,13 @@
 					title : '巡检员',
 					sortable: true
 				},
-				{
-					field : 'url', 
-					title : '图片路径',
-					sortable: true
-				},
 		        {
 		            title: '操作',
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+		            	/*actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');*/
 						return actions.join('');
 		            }
 		        }]

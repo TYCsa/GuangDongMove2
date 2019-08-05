@@ -41,10 +41,10 @@ public class ApiPlanController {
     /**
      * 根据计划ID资源编号查询站点名称
      */
-    @RequestMapping("/selectFacility/{id}")
+    @RequestMapping("/selectFacility")
     @ResponseBody
-    public Planfacility selectFacility(@PathVariable("id") Integer id){
-        Planfacility planfacility = planfacilityService.selectPlanfacilityById(id);
+    public List<Planfacility> selectFacility(){
+        List<Planfacility> planfacility = planfacilityService.selectPlanfacilityList(null);
         return planfacility;
     }
 
