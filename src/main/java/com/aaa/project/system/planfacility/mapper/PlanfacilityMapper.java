@@ -27,6 +27,12 @@ public interface PlanfacilityMapper
      */
 	public List<Planfacility> selectPlanfacilityList(Planfacility planfacility);
 
+	/**
+	 * 根据状态查询
+	 * @param status
+	 * @return
+	 */
+	List<Planfacility> selectPlanfacilityByStatus(Integer status);
 
 	/**
      * 新增计划_设备
@@ -43,6 +49,13 @@ public interface PlanfacilityMapper
      * @return 结果
      */
 	public int updatePlanfacility(Planfacility planfacility);
+
+	/**
+	 * 根据id更改状态
+	 * @param id
+	 * @return
+	 */
+	int updateStatus(Integer id);
 	
 	/**
      * 删除计划_设备

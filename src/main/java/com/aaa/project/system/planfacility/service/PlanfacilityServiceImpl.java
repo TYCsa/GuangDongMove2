@@ -43,8 +43,13 @@ public class PlanfacilityServiceImpl implements IPlanfacilityService
 	{
 	    return planfacilityMapper.selectPlanfacilityList(planfacility);
 	}
-	
-    /**
+
+	@Override
+	public List<Planfacility> selectPlanfacilityByStatus(Integer status) {
+		return planfacilityMapper.selectPlanfacilityByStatus(status);
+	}
+
+	/**
      * 新增计划_设备
      * 
      * @param planfacility 计划_设备信息
@@ -66,6 +71,11 @@ public class PlanfacilityServiceImpl implements IPlanfacilityService
 	public int updatePlanfacility(Planfacility planfacility)
 	{
 	    return planfacilityMapper.updatePlanfacility(planfacility);
+	}
+
+	@Override
+	public int updateStatus(Integer id) {
+		return planfacilityMapper.updateStatus(id);
 	}
 
 	/**

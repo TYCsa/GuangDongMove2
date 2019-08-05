@@ -71,6 +71,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPlanfacilityVo"/>
         where id = #{id}
     </select>
+    <select id="selectPlanfacilityByStatus" resultMap="PlanfacilityResult">
+        <include refid="selectPlanfacilityVo"/> where status = #{status}
+    </select>
 
     <insert id="insertPlanfacility" parameterType="Planfacility">
         insert into planfacility
@@ -109,8 +112,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where id = #{id}
     </update>
+    <update id="updateStatus">
+        update planfacility set status=2 where id=#{id}
+    </update>
 
-	<delete id="deletePlanfacilityById" parameterType="Integer">
+    <delete id="deletePlanfacilityById" parameterType="Integer">
         delete from planfacility where id = #{id}
     </delete>
 	

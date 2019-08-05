@@ -26,7 +26,14 @@ public interface IPlanfacilityService
      * @return 计划_设备集合
      */
 	public List<Planfacility> selectPlanfacilityList(Planfacility planfacility);
-	
+
+	/**
+	 * 根据状态查询
+	 * @param status
+	 * @return
+	 */
+	List<Planfacility> selectPlanfacilityByStatus(Integer status);
+
 	/**
      * 新增计划_设备
      * 
@@ -42,6 +49,13 @@ public interface IPlanfacilityService
      * @return 结果
      */
 	public int updatePlanfacility(Planfacility planfacility);
+
+	/**
+	 * 根据id修改状态
+	 * @param id
+	 * @return
+	 */
+	int updateStatus(Integer id);
 		
 	/**
      * 删除计划_设备信息
