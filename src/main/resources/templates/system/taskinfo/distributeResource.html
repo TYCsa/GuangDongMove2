@@ -11,7 +11,7 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            资源名称：<input type="text" name="resName"/>
+                            基站编号：<input type="text" name="resId"/>
                         </li>
 
                         <li>
@@ -44,7 +44,7 @@
             <!--<i class="fa fa-remove"></i> 批量释放-->
             <!--</a>-->
             <a class="btn btn-warning" onclick="$.table.exportExcel()"
-               shiro:hasPermission="system:networkresource:export">
+               shiro:hasPermission="system:taskinfo:export">
                 <i class="fa fa-download"></i> 导出
             </a>
         </div>
