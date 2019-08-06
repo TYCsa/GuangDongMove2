@@ -129,7 +129,6 @@ public class TaskinfoController extends BaseController
 	 */
 	@RequiresPermissions("system:taskinfo:add")
 	@Log(title = "巡检资源关系", businessType = BusinessType.INSERT)
-	@Transactional
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Taskinfo taskinfo)
@@ -160,7 +159,7 @@ public class TaskinfoController extends BaseController
 	}
 	
 	/**
-	 * 修改保存巡检资源关系,同时为对应驻点的巡检资源数量加一
+	 * 修改保存巡检资源关系
 	 */
 	@RequiresPermissions("system:taskinfo:edit")
 	@Log(title = "巡检资源关系", businessType = BusinessType.UPDATE)
@@ -176,7 +175,6 @@ public class TaskinfoController extends BaseController
 	 */
 	@RequiresPermissions("system:taskinfo:remove")
 	@Log(title = "巡检资源关系", businessType = BusinessType.DELETE)
-//	@Transactional
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)

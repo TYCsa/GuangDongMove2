@@ -66,13 +66,12 @@ public interface TaskinfoMapper
      * @return 结果
      */
 	public int updateTaskinfo(Taskinfo taskinfo);
-	
+
 	/**
-     * 删除巡检资源关系
-     * 
-     * @param resId 巡检资源关系ID
-     * @return 结果
-     */
+	 *  释放资源
+	 * @param taskinfo
+	 * @return
+	 */
 	public int deleteTaskinfoById(Taskinfo taskinfo);
 	
 	/**

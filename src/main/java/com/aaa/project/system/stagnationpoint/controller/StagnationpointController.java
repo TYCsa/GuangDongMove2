@@ -53,10 +53,15 @@ public class StagnationpointController extends BaseController
         List<Stagnationpoint> list = stagnationpointService.selectStagnationpointList(stagnationpoint);
 		return getDataTable(list);
 	}
+
+	/**
+	 * 去到省统计页面
+	 * @return
+	 */
 	@RequestMapping("/toStatisticsPage")
 	public String toStatisticsPage()
 	{
-		return prefix + "/statistics";
+		return prefix + "/statistics2";
 	}
 	@RequestMapping("/toStatisticsCityPage")
 	public String toStatisticsCityPage()

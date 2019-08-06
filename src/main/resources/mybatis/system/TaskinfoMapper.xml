@@ -16,7 +16,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </resultMap>
 	
 	<sql id="selectTaskinfoVo">
---         select res_id, stag_id, task_author, task_status from taskinfo
         select res_id,task.stag_id as stag_id,task_author,task_status,res_name,longitudelatitude,stag_name
           from (select t.res_id as res_id,stag_id,task_author,task_status,res_name,longitudelatitude from taskinfo t
             LEFT JOIN networkresource n on t.res_id=n.res_id) as task left join
