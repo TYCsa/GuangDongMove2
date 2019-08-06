@@ -1,5 +1,6 @@
 package com.aaa.project.system.taskinfo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.aaa.project.system.networkresource.service.INetworkresourceService;
@@ -112,17 +113,19 @@ public class TaskinfoController extends BaseController
 	/**
 	 * 去到分配资源的页面
 	 */
-	@GetMapping("/add/{resId}")
-	public String add(@PathVariable("resId") String resId, ModelMap mmap)
+	@GetMapping("/add/{ids}")
+	public String add(@PathVariable("ids") String ids,ModelMap mmap)
 	{
+		mmap.put("resId",ids);
+		String[] resIds=ids.split(",");
 		List<Stagnationpoint> stagnationpoints = stagnationpointService.selectStagnationpointList(null);
 		mmap.put("stagnationpoints",stagnationpoints);
-		mmap.put("resId",resId);
+		mmap.put("resIds",resIds);
 		return prefix + "/add";
 	}
 	
 	/**
-	 * 保存分配的资源
+	 * 批量分配基站
 	 */
 	@RequiresPermissions("system:taskinfo:add")
 	@Log(title = "巡检资源关系", businessType = BusinessType.INSERT)
@@ -131,10 +134,19 @@ public class TaskinfoController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(Taskinfo taskinfo)
 	{
+		List<Taskinfo> list=new ArrayList<>();
+		String resId = taskinfo.getResId();
+		String[] resIds = resId.split(",");
 		Integer stagId = taskinfo.getStagId();
-		taskinfoMapper.addStagCountById(stagId);
-		return toAjax(taskinfoService.insertTaskinfo(taskinfo));
+		for(int i=0;i<resIds.length;i++){
+			Taskinfo taskinfo1=new Taskinfo();
+			taskinfo1.setResId(resIds[i]);
+			taskinfo1.setStagId(stagId);
+			list.add(taskinfo1);
+		}
+		return toAjax(taskinfoMapper.insertTaskinfo(list));
 	}
+
 
 	/**
 	 * 修改巡检资源关系
@@ -160,20 +172,20 @@ public class TaskinfoController extends BaseController
 	}
 	
 	/**
-	 * 释放分配的资源，同时让对应的驻点巡检资源数量减去1
+	 * 释放分配的资源
 	 */
 	@RequiresPermissions("system:taskinfo:remove")
 	@Log(title = "巡检资源关系", businessType = BusinessType.DELETE)
-	@Transactional
+//	@Transactional
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
 	{
-
-		Taskinfo taskinfo = taskinfoMapper.selectTaskinfoById(ids);
-		Integer stagId = taskinfo.getStagId();
-		taskinfoMapper.subtractStagCountById(stagId);
-		return toAjax(taskinfoMapper.deleteTaskinfoById(ids));
+		Taskinfo taskinfo=new Taskinfo();
+		String[] split = ids.split(",");
+		taskinfo.setResId(split[0]);
+		taskinfo.setStagId(Integer.parseInt(split[1]));
+		return toAjax(taskinfoMapper.deleteTaskinfoById(taskinfo));
 	}
 	
 }

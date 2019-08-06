@@ -54,10 +54,10 @@ public interface TaskinfoMapper
 	/**
      * 新增巡检资源关系
      * 
-     * @param taskinfo 巡检资源关系信息
+     * @param list 巡检资源关系信息
      * @return 结果
      */
-	public int insertTaskinfo(Taskinfo taskinfo);
+	public int insertTaskinfo(List<Taskinfo> list);
 	
 	/**
      * 修改巡检资源关系
@@ -73,7 +73,7 @@ public interface TaskinfoMapper
      * @param resId 巡检资源关系ID
      * @return 结果
      */
-	public int deleteTaskinfoById(String resId);
+	public int deleteTaskinfoById(Taskinfo taskinfo);
 	
 	/**
      * 批量删除巡检资源关系
@@ -82,6 +82,7 @@ public interface TaskinfoMapper
      * @return 结果
      */
 	public int deleteTaskinfoByIds(String[] resIds);
+
 
 	
 }

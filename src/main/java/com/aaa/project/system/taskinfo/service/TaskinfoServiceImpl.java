@@ -53,7 +53,7 @@ public class TaskinfoServiceImpl implements ITaskinfoService
 	@Override
 	public int insertTaskinfo(Taskinfo taskinfo)
 	{
-	    return taskinfoMapper.insertTaskinfo(taskinfo);
+	    return taskinfoMapper.insertTaskinfo(null);
 	}
 	
 	/**

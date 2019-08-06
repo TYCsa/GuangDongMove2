@@ -51,20 +51,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
-    <insert id="insertTaskinfo" parameterType="Taskinfo">
-        insert into taskinfo(res_id,stag_id) values(#{resId},#{stagId})
-		<!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
-			<!--<if test="resId != null  and resId != ''  ">res_id,</if>-->
-			<!--<if test="stagId != null  ">stag_id,</if>-->
-			<!--<if test="taskAuthor != null  and taskAuthor != ''  ">task_author,</if>-->
-			<!--<if test="taskStatus != null  and taskStatus != ''  ">task_status,</if>-->
-         <!--</trim>-->
-        <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
-			<!--<if test="resId != null  and resId != ''  ">#{resId},</if>-->
-			<!--<if test="stagId != null  ">#{stagId},</if>-->
-			<!--<if test="taskAuthor != null  and taskAuthor != ''  ">#{taskAuthor},</if>-->
-			<!--<if test="taskStatus != null  and taskStatus != ''  ">#{taskStatus},</if>-->
-         <!--</trim>-->
+    <insert id="insertTaskinfo" parameterType="java.util.List">
+        insert into taskinfo(res_id,stag_id) values
+        <foreach collection="list" item="taskinfo" index="index" separator=",">
+            (#{taskinfo.resId},#{taskinfo.stagId})
+        </foreach>
     </insert>
 	 
     <update id="updateTaskinfo" parameterType="Taskinfo">
@@ -85,8 +76,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update stagnationpoint set stag_count=stag_count-1 where stag_id = #{stagId}
     </update>
 
-    <delete id="deleteTaskinfoById" parameterType="String">
-        delete from taskinfo where res_id = #{resId}
+    <delete id="deleteTaskinfoById" parameterType="Taskinfo">
+        delete from taskinfo where res_id = #{resId} and stag_id = #{stagId}
     </delete>
 	
     <delete id="deleteTaskinfoByIds" parameterType="String">

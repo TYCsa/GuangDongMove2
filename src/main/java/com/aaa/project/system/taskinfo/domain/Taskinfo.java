@@ -18,29 +18,20 @@ public class Taskinfo extends BaseEntity
 	
 	/** 资源编号 */
 	private String resId;
-	/**
-	 * 资源名称
-	 */
+	/**资源名称*/
 	private String resName;
-	/**
-	 * 所在城市
-	 */
+	/** 所在城市*/
 	private String resCity;
-
 	/** 经纬度 */
 	private String longitudelatitude;
 	/** 驻点编号 */
 	private Integer stagId;
-	/**
-	 * 驻点名称
-	 */
+	/**驻点名称*/
 	private String stagName;
 	/** 派发人 */
 	private String taskAuthor;
 	/** 分配状态 */
 	private String taskStatus;
-
-
 
 	public void setResId(String resId) 
 	{
@@ -110,7 +101,8 @@ public class Taskinfo extends BaseEntity
 	public void setStagName(String stagName) {
 		this.stagName = stagName;
 	}
-	
+
+
 
 	@Override
 	public String toString() {
