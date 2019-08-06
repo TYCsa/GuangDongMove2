@@ -7,7 +7,8 @@
 <script th:src="@{/js/echarts.min.js}"></script>
 <body class="gray-bg">
 
-	<div id="main" style="width: 600px;height:400px;"></div>
+	<div style="width:120px;height:60px;margin-left: auto;margin-right: auto;"><h3>省代维资源统计</h3></div>
+	<div id="main" style="width:900px;height:600px;margin-left: auto;margin-right: auto;"></div>
 
 	<script type="text/javascript">
     	// 基于准备好的dom，初始化echarts实例
@@ -17,11 +18,11 @@
 			tooltip: {},
 			dataset: {
 			source: [
-				['product', '2015', '2016', '2017'],
-				['Matcha Latte', 43.3, 85.8, 93.7],
-				['Milk Tea', 83.1, 73.4, 55.1],
-				['Cheese Cocoa', 86.4, 65.2, 82.5],
-				['Walnut Brownie', 72.4, 53.9, 39.1]
+				['年份', '2017', '2018', '2019'],
+				['基站数量', 43.3, 85.8, 93.7],
+				['已巡检数量', 83.1, 73.4, 55.1],
+				['隐患数量', 86.4, 65.2, 82.5],
+				['驻点数量', 72.4, 53.9, 39.1]
 			]
 			},
 			xAxis: {type: 'category'},
