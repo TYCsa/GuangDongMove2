@@ -5,63 +5,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.aaa.project.system.faultinfo.mapper.FaultinfoMapper">
     
     <resultMap type="Faultinfo" id="FaultinfoResult">
-        <result property="faultId"    column="fault_id"    />
+        <result property="id"    column="id"    />
         <result property="resId"    column="res_id"    />
-        <result property="faultTime"    column="fault_time"    />
         <result property="empno"    column="empno"    />
         <result property="standardId"    column="standard_id"    />
-        <result property="address"    column="address"    />
-        <result property="severity"    column="severity"    />
-        <result property="picture"    column="picture"    />
+        <result property="severty"    column="severty"    />
         <result property="problem"    column="problem"    />
     </resultMap>
 	
 	<sql id="selectFaultinfoVo">
-        select fault_id, res_id, fault_time, empno, standard_id, address, severity, picture, problem from faultinfo
+        select id, res_id, empno, standard_id, severty, problem from faultinfo
     </sql>
 	
     <select id="selectFaultinfoList" parameterType="Faultinfo" resultMap="FaultinfoResult">
         <include refid="selectFaultinfoVo"/>
         <where>  
-            <if test="faultId != null "> and fault_id = #{faultId}</if>
+            <if test="id != null "> and id = #{id}</if>
              <if test="resId != null  and resId != '' "> and res_id = #{resId}</if>
-             <if test="faultTime != null "> and fault_time = #{faultTime}</if>
              <if test="empno != null  and empno != '' "> and empno = #{empno}</if>
              <if test="standardId != null  and standardId != '' "> and standard_id = #{standardId}</if>
-             <if test="address != null  and address != '' "> and address = #{address}</if>
-             <if test="severity != null  and severity != '' "> and severity = #{severity}</if>
-             <if test="picture != null  and picture != '' "> and picture = #{picture}</if>
+             <if test="severty != null  and severty != '' "> and severty = #{severty}</if>
              <if test="problem != null  and problem != '' "> and problem = #{problem}</if>
          </where>
     </select>
     
     <select id="selectFaultinfoById" parameterType="Integer" resultMap="FaultinfoResult">
         <include refid="selectFaultinfoVo"/>
-        where fault_id = #{faultId}
+        where id = #{id}
     </select>
         
     <insert id="insertFaultinfo" parameterType="Faultinfo">
         insert into faultinfo
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="faultId != null  ">fault_id,</if>
+			<if test="id != null  ">id,</if>
 			<if test="resId != null  and resId != ''  ">res_id,</if>
-			<if test="faultTime != null  ">fault_time,</if>
 			<if test="empno != null  and empno != ''  ">empno,</if>
 			<if test="standardId != null  and standardId != ''  ">standard_id,</if>
-			<if test="address != null  and address != ''  ">address,</if>
-			<if test="severity != null  and severity != ''  ">severity,</if>
-			<if test="picture != null  and picture != ''  ">picture,</if>
+			<if test="severty != null  and severty != ''  ">severty,</if>
 			<if test="problem != null  and problem != ''  ">problem,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="faultId != null  ">#{faultId},</if>
+			<if test="id != null  ">#{id},</if>
 			<if test="resId != null  and resId != ''  ">#{resId},</if>
-			<if test="faultTime != null  ">#{faultTime},</if>
 			<if test="empno != null  and empno != ''  ">#{empno},</if>
 			<if test="standardId != null  and standardId != ''  ">#{standardId},</if>
-			<if test="address != null  and address != ''  ">#{address},</if>
-			<if test="severity != null  and severity != ''  ">#{severity},</if>
-			<if test="picture != null  and picture != ''  ">#{picture},</if>
+			<if test="severty != null  and severty != ''  ">#{severty},</if>
 			<if test="problem != null  and problem != ''  ">#{problem},</if>
          </trim>
     </insert>
@@ -70,25 +58,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update faultinfo
         <trim prefix="SET" suffixOverrides=",">
             <if test="resId != null  and resId != ''  ">res_id = #{resId},</if>
-            <if test="faultTime != null  ">fault_time = #{faultTime},</if>
             <if test="empno != null  and empno != ''  ">empno = #{empno},</if>
             <if test="standardId != null  and standardId != ''  ">standard_id = #{standardId},</if>
-            <if test="address != null  and address != ''  ">address = #{address},</if>
-            <if test="severity != null  and severity != ''  ">severity = #{severity},</if>
-            <if test="picture != null  and picture != ''  ">picture = #{picture},</if>
+            <if test="severty != null  and severty != ''  ">severty = #{severty},</if>
             <if test="problem != null  and problem != ''  ">problem = #{problem},</if>
         </trim>
-        where fault_id = #{faultId}
+        where id = #{id}
     </update>
 
 	<delete id="deleteFaultinfoById" parameterType="Integer">
-        delete from faultinfo where fault_id = #{faultId}
+        delete from faultinfo where id = #{id}
     </delete>
 	
     <delete id="deleteFaultinfoByIds" parameterType="String">
-        delete from faultinfo where fault_id in 
-        <foreach item="faultId" collection="array" open="(" separator="," close=")">
-            #{faultId}
+        delete from faultinfo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
     

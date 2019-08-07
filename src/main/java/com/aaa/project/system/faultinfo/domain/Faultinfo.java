@@ -3,45 +3,38 @@ package com.aaa.project.system.faultinfo.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
-import java.util.Date;
 
 /**
  * 隐患表 faultinfo
  * 
  * @author toneySong
- * @date 2019-08-03
+ * @date 2019-08-07
  */
 public class Faultinfo extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	
-	/** 隐患编号 */
-	private Integer faultId;
+	/**  */
+	private Integer id;
 	/** 资源id号 */
 	private String resId;
-	/** 隐患发现时间 */
-	private Date faultTime;
 	/** 隐患发现者工号 */
 	private String empno;
 	/** 规范编号 */
 	private String standardId;
-	/** 发现地址 */
-	private String address;
 	/** 严重程度 */
-	private String severity;
-	/** 图片 */
-	private String picture;
+	private String severty;
 	/** 问题描述 */
 	private String problem;
 
-	public void setFaultId(Integer faultId) 
+	public void setId(Integer id) 
 	{
-		this.faultId = faultId;
+		this.id = id;
 	}
 
-	public Integer getFaultId() 
+	public Integer getId() 
 	{
-		return faultId;
+		return id;
 	}
 	public void setResId(String resId) 
 	{
@@ -51,15 +44,6 @@ public class Faultinfo extends BaseEntity
 	public String getResId() 
 	{
 		return resId;
-	}
-	public void setFaultTime(Date faultTime) 
-	{
-		this.faultTime = faultTime;
-	}
-
-	public Date getFaultTime() 
-	{
-		return faultTime;
 	}
 	public void setEmpno(String empno) 
 	{
@@ -79,32 +63,14 @@ public class Faultinfo extends BaseEntity
 	{
 		return standardId;
 	}
-	public void setAddress(String address) 
+	public void setSeverty(String severty) 
 	{
-		this.address = address;
+		this.severty = severty;
 	}
 
-	public String getAddress() 
+	public String getSeverty() 
 	{
-		return address;
-	}
-	public void setSeverity(String severity) 
-	{
-		this.severity = severity;
-	}
-
-	public String getSeverity() 
-	{
-		return severity;
-	}
-	public void setPicture(String picture) 
-	{
-		this.picture = picture;
-	}
-
-	public String getPicture() 
-	{
-		return picture;
+		return severty;
 	}
 	public void setProblem(String problem) 
 	{
@@ -118,14 +84,11 @@ public class Faultinfo extends BaseEntity
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("faultId", getFaultId())
+            .append("id", getId())
             .append("resId", getResId())
-            .append("faultTime", getFaultTime())
             .append("empno", getEmpno())
             .append("standardId", getStandardId())
-            .append("address", getAddress())
-            .append("severity", getSeverity())
-            .append("picture", getPicture())
+            .append("severty", getSeverty())
             .append("problem", getProblem())
             .toString();
     }

@@ -7,17 +7,17 @@ import java.util.List;
  * 隐患 数据层
  * 
  * @author toneySong
- * @date 2019-08-03
+ * @date 2019-08-07
  */
 public interface FaultinfoMapper 
 {
 	/**
      * 查询隐患信息
      * 
-     * @param faultId 隐患ID
+     * @param id 隐患ID
      * @return 隐患信息
      */
-	public Faultinfo selectFaultinfoById(Integer faultId);
+	public Faultinfo selectFaultinfoById(Integer id);
 	
 	/**
      * 查询隐患列表
@@ -46,17 +46,17 @@ public interface FaultinfoMapper
 	/**
      * 删除隐患
      * 
-     * @param faultId 隐患ID
+     * @param id 隐患ID
      * @return 结果
      */
-	public int deleteFaultinfoById(Integer faultId);
+	public int deleteFaultinfoById(Integer id);
 	
 	/**
      * 批量删除隐患
      * 
-     * @param faultIds 需要删除的数据ID
+     * @param ids 需要删除的数据ID
      * @return 结果
      */
-	public int deleteFaultinfoByIds(String[] faultIds);
+	public int deleteFaultinfoByIds(String[] ids);
 	
 }

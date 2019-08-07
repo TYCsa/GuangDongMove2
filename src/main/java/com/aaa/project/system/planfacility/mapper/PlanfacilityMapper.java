@@ -56,7 +56,8 @@ public interface PlanfacilityMapper
 	 * @return
 	 */
 	int updateStatus(Integer id);
-	
+
+	int updateTask(Integer id);
 	/**
      * 删除计划_设备
      * 

@@ -31,7 +31,13 @@ public class StandardServiceImpl implements IStandardService
 	{
 	    return standardMapper.selectStandardById(standardNum);
 	}
-	
+
+	@Override
+	public List<Standard> selectStandardfindAll() {
+		return standardMapper.selectStandardfindAll();
+	}
+
+
 	/**
      * 查询资源管理规范列表
      * 

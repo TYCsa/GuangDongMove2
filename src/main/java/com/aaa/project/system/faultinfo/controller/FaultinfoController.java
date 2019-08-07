@@ -23,7 +23,7 @@ import com.aaa.common.utils.poi.ExcelUtil;
  * 隐患 信息操作处理
  * 
  * @author toneySong
- * @date 2019-08-03
+ * @date 2019-08-07
  */
 @Controller
 @RequestMapping("/system/faultinfo")
@@ -92,10 +92,10 @@ public class FaultinfoController extends BaseController
 	/**
 	 * 修改隐患
 	 */
-	@GetMapping("/edit/{faultId}")
-	public String edit(@PathVariable("faultId") Integer faultId, ModelMap mmap)
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
-		Faultinfo faultinfo = faultinfoService.selectFaultinfoById(faultId);
+		Faultinfo faultinfo = faultinfoService.selectFaultinfoById(id);
 		mmap.put("faultinfo", faultinfo);
 	    return prefix + "/edit";
 	}

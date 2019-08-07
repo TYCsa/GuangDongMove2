@@ -78,6 +78,11 @@ public class PlanfacilityServiceImpl implements IPlanfacilityService
 		return planfacilityMapper.updateStatus(id);
 	}
 
+	@Override
+	public int updateTask(Integer id) {
+		return planfacilityMapper.updateTask(id);
+	}
+
 	/**
      * 删除计划_设备对象
      * 

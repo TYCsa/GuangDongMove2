@@ -115,6 +115,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateStatus">
         update planfacility set status=2 where id=#{id}
     </update>
+    <update id="updateTask">
+        update planfacility set status=1 where id=#{id}
+    </update>
 
     <delete id="deletePlanfacilityById" parameterType="Integer">
         delete from planfacility where id = #{id}

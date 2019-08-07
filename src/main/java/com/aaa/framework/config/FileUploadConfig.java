@@ -14,6 +14,16 @@ import org.springframework.stereotype.Component;
 public class FileUploadConfig {
     //基站照片上传路径
     private String uploadStationImape;
+    //基站照片请求路径
+    private String faultImageDir;
+
+    public String getFaultImageDir() {
+        return faultImageDir;
+    }
+
+    public void setFaultImageDir(String faultImageDir) {
+        this.faultImageDir = faultImageDir;
+    }
 
     public String getUploadStationImape() {
         return uploadStationImape;

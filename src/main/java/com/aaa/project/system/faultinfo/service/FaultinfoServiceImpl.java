@@ -12,7 +12,7 @@ import com.aaa.common.support.Convert;
  * 隐患 服务层实现
  * 
  * @author toneySong
- * @date 2019-08-03
+ * @date 2019-08-07
  */
 @Service
 public class FaultinfoServiceImpl implements IFaultinfoService 
@@ -23,13 +23,13 @@ public class FaultinfoServiceImpl implements IFaultinfoService
 	/**
      * 查询隐患信息
      * 
-     * @param faultId 隐患ID
+     * @param id 隐患ID
      * @return 隐患信息
      */
     @Override
-	public Faultinfo selectFaultinfoById(Integer faultId)
+	public Faultinfo selectFaultinfoById(Integer id)
 	{
-	    return faultinfoMapper.selectFaultinfoById(faultId);
+	    return faultinfoMapper.selectFaultinfoById(id);
 	}
 	
 	/**

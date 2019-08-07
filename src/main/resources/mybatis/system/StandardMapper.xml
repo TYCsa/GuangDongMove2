@@ -35,7 +35,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectStandardVo"/>
         where standard_num = #{standardNum}
     </select>
-        
+    <select id="selectStandardfindAll" resultType="com.aaa.project.system.standard.domain.Standard">
+         select * from standard where standard_id='10086'
+    </select>
+
     <insert id="insertStandard" parameterType="Standard">
         insert into standard
 		<trim prefix="(" suffix=")" suffixOverrides=",">

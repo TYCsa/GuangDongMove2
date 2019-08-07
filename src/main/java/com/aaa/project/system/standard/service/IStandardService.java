@@ -18,6 +18,11 @@ public interface IStandardService
      * @return 资源管理规范信息
      */
 	public Standard selectStandardById(Integer standardNum);
+
+	/**
+	 * 查询巡检项目
+	 */
+	public List<Standard> selectStandardfindAll();
 	
 	/**
      * 查询资源管理规范列表

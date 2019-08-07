@@ -135,4 +135,4 @@ gen:
 #配置文件上传的路径
 upload:
   uploadStationImape: D:\IDEworkspace\GuangDongMove2\src\main\resources\static\fileupload\station
-
+  faultImageDir: \fault\
