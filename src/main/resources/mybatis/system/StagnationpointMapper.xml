@@ -35,7 +35,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectStagnationpointVo"/>
         where stag_id = #{stagId}
     </select>
-        
+
+
+    <!--统计系列-->
+    <select id="selectStagnationpointCount" resultType="java.lang.Integer">
+        select count(stag_id) from stagnationpoint
+    </select>
+    <select id="selectNetworkersourceCount" resultType="java.lang.Integer">
+        select  count(res_id) from networkresource
+    </select>
+    <select id="selectTaskinfoCount" resultType="java.lang.Integer">
+        select count(res_id) from taskinfo
+    </select>
+    <select id="selectFaultinfoCount" resultType="java.lang.Integer">
+        select count(res_id) from faultinfo
+    </select>
+
+
+    <!--条件统计系列-->
+    <select id="selectStagnationpointCountByCondition" resultType="java.lang.Integer">
+        select count(stag_id) from stagnationpoint where stag_address='广东省深圳市'
+    </select>
+    <select id="selectNetworkersourceCountByCondition" resultType="java.lang.Integer">
+        select  count(res_id) from networkresource where res_city=0755
+    </select>
+    <select id="selectTaskinfoCountByCondition" resultType="java.lang.Integer">
+        select count(t.res_id) from taskinfo t LEFT JOIN networkresource n on t.res_id=n.res_id where res_city=0755
+    </select>
+    <select id="selectFaultinfoCountByCondition" resultType="java.lang.Integer">
+        select count(f.res_id) from faultinfo f LEFT JOIN networkresource n on f.res_id=n.res_id where res_city=0755
+    </select>
+
+
+
+
+
     <insert id="insertStagnationpoint" parameterType="Stagnationpoint">
         insert into stagnationpoint
 		<trim prefix="(" suffix=")" suffixOverrides=",">
