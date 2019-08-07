@@ -32,7 +32,13 @@ public interface StandardMapper
      * @return 资源管理规范集合
      */
 	public List<Standard> selectStandardList(Standard standard);
-	
+
+	/**
+	 * 去重复查询
+	 * @param standard
+	 * @return
+	 */
+	public List<Standard> selectStandardListDist(Standard standard);
 	/**
      * 新增资源管理规范
      * 

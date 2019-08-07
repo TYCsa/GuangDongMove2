@@ -17,7 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectStandardVo">
         select standard_num, standard_id, res_type, standard_event, standard_content, standard_cycle, standard_time from standard
     </sql>
-	
+
+    <select id="selectStandardListDist" parameterType="Standard" resultMap="StandardResult">
+         select distinct standard_id, res_type from standard
+    </select>
+
     <select id="selectStandardList" parameterType="Standard" resultMap="StandardResult">
         <include refid="selectStandardVo"/>
         <where>  

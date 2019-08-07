@@ -70,7 +70,7 @@ public class TaskinfoController extends BaseController
 	public TableDataInfo listResource(Taskinfo taskinfo)
 	{
 		startPage();
-		List<Taskinfo> taskinfos = taskinfoMapper.selectDistributeResource(null);
+		List<Taskinfo> taskinfos = taskinfoMapper.selectDistributeResource(taskinfo);
 		return getDataTable(taskinfos);
 	}
 

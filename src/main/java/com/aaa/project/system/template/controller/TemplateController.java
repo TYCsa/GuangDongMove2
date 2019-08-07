@@ -39,8 +39,8 @@ public class TemplateController extends BaseController {
     @Autowired
     private ITemplateService templateService;
 
-    @Autowired
-    private IStandardService standardService;
+    @Resource
+    private StandardMapper standardService;
     @RequiresPermissions("system:template:view")
     @GetMapping()
     public String template() {
@@ -76,10 +76,9 @@ public class TemplateController extends BaseController {
      * 新增模版管理
      */
     @GetMapping("/add")
-    public String add(HttpSession session) {
-//        List<Standard> standards = standardService.selectStandardList(null);
-//        System.out.println(standards.size()+"---------------------------");
-//        session.setAttribute("standards",standards);
+    public String add(ModelMap mmap) {
+        List<Standard> standards = standardService.selectStandardListDist(null);
+        mmap.put("standards",standards);
         return prefix + "/add";
     }
 
