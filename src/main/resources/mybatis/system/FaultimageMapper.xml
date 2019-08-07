@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.faultimage.mapper.FaultimageMapper">
+    
+    <resultMap type="Faultimage" id="FaultimageResult">
+        <result property="id"    column="id"    />
+        <result property="faultId"    column="fault_id"    />
+        <result property="imageurl"    column="imageurl"    />
+    </resultMap>
+	
+	<sql id="selectFaultimageVo">
+        select id, fault_id, imageurl from faultimage
+    </sql>
+	
+    <select id="selectFaultimageList" parameterType="Faultimage" resultMap="FaultimageResult">
+        <include refid="selectFaultimageVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="faultId != null "> and fault_id = #{faultId}</if>
+             <if test="imageurl != null  and imageurl != '' "> and imageurl = #{imageurl}</if>
+         </where>
+    </select>
+    
+    <select id="selectFaultimageById" parameterType="Integer" resultMap="FaultimageResult">
+        <include refid="selectFaultimageVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectFaultimageByfaultId" resultType="com.aaa.project.system.faultimage.domain.Faultimage">
+        <include refid="selectFaultimageVo"/>
+        where fault_id=#{fault_id}
+    </select>
+
+    <insert id="insertFaultimage" parameterType="Faultimage">
+        insert into faultimage
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="faultId != null  ">fault_id,</if>
+			<if test="imageurl != null  and imageurl != ''  ">imageurl,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="faultId != null  ">#{faultId},</if>
+			<if test="imageurl != null  and imageurl != ''  ">#{imageurl},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateFaultimage" parameterType="Faultimage">
+        update faultimage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="faultId != null  ">fault_id = #{faultId},</if>
+            <if test="imageurl != null  and imageurl != ''  ">imageurl = #{imageurl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="updateFaultImageByFaulitInfoId">
+        update faultimage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="imageurl != null  and imageurl != ''  ">imageurl = #{imageurl},</if>
+        </trim>
+        where fault_id = #{faultId}
+    </update>
+
+    <delete id="deleteFaultimageById" parameterType="Integer">
+        delete from faultimage where id = #{id}
+    </delete>
+	
+    <delete id="deleteFaultimageByIds" parameterType="String">
+        delete from faultimage where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
