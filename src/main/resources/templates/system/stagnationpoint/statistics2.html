@@ -8,7 +8,7 @@
 <body class="gray-bg">
 
 	<div style="width:120px;height:60px;margin-left: auto;margin-right: auto;"><h3>省代维资源统计</h3></div>
-	<div id="main" style="width:900px;height:600px;margin-left: auto;margin-right: auto;"></div>
+	<div id="main" style="width:700px;height:600px;margin-left:auto;margin-right:auto;"></div>
 
 	<script type="text/javascript">
     	// 基于准备好的dom，初始化echarts实例
@@ -19,10 +19,10 @@
 			dataset: {
 			source: [
 				['年份', '2017', '2018', '2019'],
-				['基站数量', 43.3, 85.8, 93.7],
-				['已巡检数量', 83.1, 73.4, 55.1],
-				['隐患数量', 86.4, 65.2, 82.5],
-				['驻点数量', 72.4, 53.9, 39.1]
+				['基站数量', 9, 10,[[${networkersourceCount}]]],
+				['已分配基站数量', 4, 5, [[${taskinfoCount}]]],
+				['隐患数量', 3, 2, [[${faultinfoCount}]]],
+				['驻点数量', 7, 6,[[${stagnationpointCount}]]]
 			]
 			},
 			xAxis: {type: 'category'},
@@ -34,8 +34,9 @@
 				{type: 'bar'}
 			]
 		};
-    	// 使用刚指定的配置项和数据显示图表。
+        // 使用刚指定的配置项和数据显示图表。
    		 myChart.setOption(option);
+
 	</script>
 
 </body>

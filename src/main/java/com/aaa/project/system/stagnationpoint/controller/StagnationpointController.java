@@ -1,6 +1,8 @@
 package com.aaa.project.system.stagnationpoint.controller;
 
 import java.util.List;
+
+import com.aaa.project.system.stagnationpoint.mapper.StagnationpointMapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.common.utils.poi.ExcelUtil;
 
+import javax.annotation.Resource;
+
 /**
  * 驻点管理 信息操作处理
  * 
@@ -33,7 +37,9 @@ public class StagnationpointController extends BaseController
 	
 	@Autowired
 	private IStagnationpointService stagnationpointService;
-	
+
+	@Resource
+	private StagnationpointMapper stagnationpointMapper;
 	@RequiresPermissions("system:stagnationpoint:view")
 	@GetMapping()
 	public String stagnationpoint()
@@ -59,14 +65,36 @@ public class StagnationpointController extends BaseController
 	 * @return
 	 */
 	@RequestMapping("/toStatisticsPage")
-	public String toStatisticsPage()
+	public String toStatisticsPage(ModelMap mmap)
 	{
+		//驻点的数量
+		int stagnationpointCount = stagnationpointMapper.selectStagnationpointCount();
+		mmap.put("stagnationpointCount",stagnationpointCount);
+		//基站数量
+		int networkersourceCount = stagnationpointMapper.selectNetworkersourceCount();
+		mmap.put("networkersourceCount",networkersourceCount);
+		//已分配基站数量
+		int taskinfoCount = stagnationpointMapper.selectTaskinfoCount();
+		mmap.put("taskinfoCount",taskinfoCount);
+		int faultinfoCount = stagnationpointMapper.selectFaultinfoCount();
+		mmap.put("faultinfoCount",faultinfoCount);
 		return prefix + "/statistics2";
 	}
 	@RequestMapping("/toStatisticsCityPage")
-	public String toStatisticsCityPage()
+	public String toStatisticsCityPage(ModelMap mmap)
 	{
-		return prefix + "/statisticsByCity";
+		//驻点的数量
+		int stagnationpointCount = stagnationpointMapper.selectStagnationpointCountByCondition();
+		mmap.put("stagnationpointCount",stagnationpointCount);
+		//基站数量
+		int networkersourceCount = stagnationpointMapper.selectNetworkersourceCountByCondition();
+		mmap.put("networkersourceCount",networkersourceCount);
+		//已分配基站数量
+		int taskinfoCount = stagnationpointMapper.selectTaskinfoCountByCondition();
+		mmap.put("taskinfoCount",taskinfoCount);
+		int faultinfoCount = stagnationpointMapper.selectFaultinfoCountByCondition();
+		mmap.put("faultinfoCount",faultinfoCount);
+		return prefix + "/statisticsByCity2";
 	}
 
 	/**
