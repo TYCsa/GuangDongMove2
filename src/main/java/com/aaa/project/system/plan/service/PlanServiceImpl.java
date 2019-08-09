@@ -8,16 +8,18 @@ import com.aaa.project.system.plan.domain.Plan;
 import com.aaa.project.system.plan.service.IPlanService;
 import com.aaa.common.support.Convert;
 
+import javax.annotation.Resource;
+
 /**
  * 计划 服务层实现
  * 
- * @author teacherChen
+ * @author
  * @date 2019-08-02
  */
 @Service
 public class PlanServiceImpl implements IPlanService 
 {
-	@Autowired
+	@Resource
 	private PlanMapper planMapper;
 
 	/**
@@ -32,10 +34,7 @@ public class PlanServiceImpl implements IPlanService
 	    return planMapper.selectPlanById(id);
 	}
 
-	@Override
-	public List<Plan> findAllList() {
-		return planMapper.findAllList();
-	}
+
 
 	/**
      * 查询计划列表

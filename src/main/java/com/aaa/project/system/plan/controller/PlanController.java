@@ -189,7 +189,7 @@ public class PlanController extends BaseController
 	/**
 	 * 修改保存计划
 	 */
-	@RequiresPermissions("system:plan:edit")
+
 	@Log(title = "计划", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody

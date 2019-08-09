@@ -19,12 +19,7 @@ public interface PlanMapper
      */
 	public Plan selectPlanById(Integer id);
 
-	/**
-	 * 查询已审核过的计划
-	 * @return
-	 */
-	List<Plan> findAllList();
-	
+
 	/**
      * 查询计划列表
      * 
