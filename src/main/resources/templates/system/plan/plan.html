@@ -11,7 +11,11 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								制定时间：<input type="text" name="makeTime"/>
+								驻点：
+							<select name="stationaryPoint">
+								<option value="">---请选择---</option>
+								<option th:each="stagnationpoint : ${stagnationpoints}" th:text="${stagnationpoint.stagName}" th:value="${stagnationpoint.stagId}"></option>
+							</select>
 							</li>
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

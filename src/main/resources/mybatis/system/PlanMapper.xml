@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="makeTime != null  and makeTime != '' "> and make_time = #{makeTime}</if>
              <if test="stationaryPoint != null "> and stationary_point = #{stationaryPoint}</if>
              <if test="checkCount != null "> and check_count = #{checkCount}</if>
-             <if test="status != null "> and not (status = #{status})</if>
+             <if test="status != null "> status = #{status}</if>
              <if test="type != null "> and type = #{type}</if>
              <if test="dutyMan != null  and dutyMan != '' "> and duty_man = #{dutyMan}</if>
              <if test="dutyTime != null "> and duty_time = #{dutyTime}</if>

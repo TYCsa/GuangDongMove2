@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.aaa.common.utils.security.ShiroUtils;
 import com.aaa.project.system.networkresource.domain.Networkresource;
 import com.aaa.project.system.networkresource.service.INetworkresourceService;
 import com.aaa.project.system.planfacility.domain.Planfacility;
 import com.aaa.project.system.planfacility.service.IPlanfacilityService;
+import com.aaa.project.system.stagnationpoint.domain.Stagnationpoint;
+import com.aaa.project.system.stagnationpoint.service.IStagnationpointService;
 import com.aaa.project.system.taskinfo.domain.Taskinfo;
 import com.aaa.project.system.taskinfo.service.ITaskinfoService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -51,11 +54,15 @@ public class PlanController extends BaseController
 	private ITaskinfoService taskinfoService;
 	@Autowired
 	private INetworkresourceService networkresourceService;
+	@Autowired
+	private IStagnationpointService stagnationpointService;
 
 	@RequiresPermissions("system:plan:view")
 	@GetMapping()
-	public String plan()
+	public String plan(ModelMap mmap)
 	{
+		List<Stagnationpoint> stagnationpoints = stagnationpointService.selectStagnationpointList(null);
+		mmap.put("stagnationpoints",stagnationpoints);
 	    return prefix + "/plan";
 	}
 
@@ -67,8 +74,10 @@ public class PlanController extends BaseController
 	@GetMapping("checkEdit/{id}")
 	public String checkEdit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
+
 		Plan plan = planService.selectPlanById(id);
 		mmap.put("plan", plan);
+
 		return prefix + "/checkEdit";
 	}
 	
@@ -133,21 +142,22 @@ public class PlanController extends BaseController
 	@Log(title = "计划", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(Plan plan, HttpServletRequest request)
+	public AjaxResult addSave(Plan plan)
 	{
-		String[] siteIds = request.getParameterValues("networkresourceId");
+
 
 		//对用公司创建的计划
 		plan.setStationaryPoint(10002);
-
-		List<Networkresource> networkresourceList = new ArrayList<>();
-		for (String id :siteIds) {
-			Networkresource site = networkresourceService.selectNetworkresourceById(id);
-			networkresourceList.add(site);
+		Taskinfo taskinfo = new Taskinfo();
+		taskinfo.setStagId(10002);
+		List<Taskinfo> taskinfos = taskinfoService.selectTaskinfoList(taskinfo);
+		List<Networkresource> networkresources = new ArrayList<>();
+		for (Taskinfo task : taskinfos) {
+			networkresources.add(networkresourceService.selectNetworkresourceById(task.getResId()));
 		}
-		plan.setCheckCount(networkresourceList.size());
+		plan.setCheckCount(networkresources.size());
 		planService.insertPlan(plan);
-		for (Networkresource n: networkresourceList){
+		for (Networkresource n: networkresources){
 			Planfacility planfacility = new Planfacility();
 			planfacility.setPlanId(plan.getId());
 			planfacility.setFacilityId(n.getResId());
@@ -188,17 +198,18 @@ public class PlanController extends BaseController
 		switch (plan.getStatus()){
 			case 0:
 				plan.setStatus(1);
-				plan.setDutyMan("小明");
+				plan.setDutyMan(ShiroUtils.getSysUser().getUserName());
 				plan.setDutyTime(new Date());
+				plan.setCause("");
 				break;
 			case 1:
 				if (checkStatus!= null && checkStatus.equals("on")){
 					plan.setStatus(2);
-					plan.setCheckMan("小明");
+					plan.setCheckMan(ShiroUtils.getSysUser().getUserName());
 					plan.setCheckTime(new Date());
 				}else{
 					plan.setStatus(3);
-					plan.setCheckMan("小明");
+					plan.setCheckMan(ShiroUtils.getSysUser().getUserName());
 					plan.setCheckTime(new Date());
 				}
 				break;

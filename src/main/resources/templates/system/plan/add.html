@@ -23,7 +23,7 @@
 				<label class="col-sm-3 control-label">站点：</label>
 				<div class="col-sm-8">
 					<label th:each="networkresource:${networkresources}" class="check-box">
-						<input name="networkresourceId" type="checkbox" th:value="${networkresource.resId}" th:text="${networkresource.resName}">
+						<label name="networkresourceId" th:value="${networkresource.resId}" th:text="${networkresource.resName}"></label>
 					</label>
 				</div>
 			</div>
