@@ -15,12 +15,16 @@
                         </li>
 
                         <li>
-                            资源所在市：
-                            <input type="text" name="resCity"/>
+                            代维驻点编号：
+                            <input type="text" name="stagId"/>
                         </li>
                         <li>
                             状态：
-                            <input type="text" name="taskStatus"/>
+                            <!--<input type="text" name="taskStatus"/>-->
+                            <select name="taskStatus">
+                                <option></option>
+                                <option >未巡检</option>
+                            </select>
                         </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
@@ -37,12 +41,6 @@
             <a class="btn btn-success" onclick="batchDistributeResource()" shiro:hasPermission="system:taskinfo:add">
             <i class="fa fa-plus"></i> 批量分配
             </a>
-            <!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:networkresource:edit">-->
-            <!--<i class="fa fa-edit"></i> 修改-->
-            <!--</a>-->
-            <!--<a class="btn btn-danger btn-del btn-del disabled" onclick="removeAll()" shiro:hasPermission="system:taskinfo:remove">-->
-            <!--<i class="fa fa-remove"></i> 批量释放-->
-            <!--</a>-->
             <a class="btn btn-warning" onclick="$.table.exportExcel()"
                shiro:hasPermission="system:taskinfo:export">
                 <i class="fa fa-download"></i> 导出

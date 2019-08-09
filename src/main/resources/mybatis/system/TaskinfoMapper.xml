@@ -26,9 +26,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTaskinfoVo"/>
         <where>  
             <if test="resId != null  and resId != '' "> and res_id = #{resId}</if>
-             <if test="stagId != null "> and task.stag_id = #{stagId}</if>
-             <if test="stagName != null "> and stag_name = #{stag_name}</if>
-             <if test="taskAuthor != null  and taskAuthor != '' "> and task_author = #{taskAuthor}</if>
+             <if test="stagId != null  and stagId != ''"> and task.stag_id = #{stagId}</if>
+             <if test="stagName != null and stagName != ''"> and stag_name = #{stag_name}</if>
+            <if test="resCity != null and resCity != ''"> and res_city = #{resCity}</if>
              <if test="taskStatus != null  and taskStatus != '' "> and task_status = #{taskStatus}</if>
          </where>
     </select>
@@ -38,13 +38,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where task.res_id = #{resId}
     </select>
     <select id="selectDistributeResource" resultMap="TaskinfoResult">
-        select n.res_id as res_id,res_name,res_city,longitudelatitude,stag_id,task_author,task_status
+        select n.res_id as res_id,res_name,res_city,longitudelatitude,stag_id,task_author,task_status,enable
          from networkresource n left join taskinfo t on n.res_id=t.res_id
         <where>
-            enable=1
-            <if test="resId != null  and resId != '' "> and res_id = #{resId}</if>
-            <if test="resName != null  and resName != '' "> and res_name = #{resName}</if>
-            <if test="stagId != null "> and n.stag_id = #{stagId}</if>
+            enable =1
+            <if test="resId != null  and resId != '' "> and n.res_id = #{resId}</if>
+            <if test="stagId != null and stagId != ''"> and stag_id = #{stagId}</if>
+            <if test="stagName != null and stagName != ''"> and stag_name = #{stagName}</if>
+            <if test="resCity != null and resCity != ''"> and res_city = #{resCity}</if>
             <if test="taskAuthor != null  and taskAuthor != '' "> and task_author = #{taskAuthor}</if>
             <if test="taskStatus != null  and taskStatus != '' "> and task_status = #{taskStatus}</if>
         </where>

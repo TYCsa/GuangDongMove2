@@ -26,7 +26,7 @@ import javax.annotation.Resource;
 /**
  * 驻点管理 信息操作处理
  * 
- * @author
+ * @author toneySong
  * @date 2019-07-30
  */
 @Controller
@@ -80,10 +80,16 @@ public class StagnationpointController extends BaseController
 		mmap.put("faultinfoCount",faultinfoCount);
 		return prefix + "/statistics2";
 	}
+
+	/**
+	 * 去到市统计页面
+	 * @param mmap
+	 * @return
+	 */
 	@RequestMapping("/toStatisticsCityPage")
 	public String toStatisticsCityPage(ModelMap mmap)
 	{
-		//驻点的数量
+		//按条件驻点的数量
 		int stagnationpointCount = stagnationpointMapper.selectStagnationpointCountByCondition();
 		mmap.put("stagnationpointCount",stagnationpointCount);
 		//基站数量
@@ -92,6 +98,9 @@ public class StagnationpointController extends BaseController
 		//已分配基站数量
 		int taskinfoCount = stagnationpointMapper.selectTaskinfoCountByCondition();
 		mmap.put("taskinfoCount",taskinfoCount);
+		/**
+		 *隐患数量
+		 */
 		int faultinfoCount = stagnationpointMapper.selectFaultinfoCountByCondition();
 		mmap.put("faultinfoCount",faultinfoCount);
 		return prefix + "/statisticsByCity2";
