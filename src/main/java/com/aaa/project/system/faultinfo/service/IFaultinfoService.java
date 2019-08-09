@@ -34,6 +34,13 @@ public interface IFaultinfoService
      * @return 结果
      */
 	public int insertFaultinfo(Faultinfo faultinfo);
+
+	/**
+	 * 添加隐患信息
+	 * @param faultinfo
+	 * @return
+	 */
+	public int insertInfo(Faultinfo faultinfo);
 	
 	/**
      * 修改隐患

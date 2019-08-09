@@ -32,6 +32,12 @@ public class EmpServiceImpl implements IEmpService
 	    return empMapper.selectEmpById(empno);
 	}
 
+	/**
+	 * 巡检人员根据手机号和密码登录
+	 * @param phone
+	 * @param password
+	 * @return
+	 */
 	@Override
 	public boolean empLogin(String phone, String password) {
 		Emp emp = new Emp();
@@ -42,6 +48,11 @@ public class EmpServiceImpl implements IEmpService
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Emp selectEmpByphone(String phone) {
+		return empMapper.selectEmpByphone(phone);
 	}
 
 	/**

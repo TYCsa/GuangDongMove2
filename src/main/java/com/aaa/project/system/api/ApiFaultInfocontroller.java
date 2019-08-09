@@ -8,15 +8,14 @@ package com.aaa.project.system.api;
  */
 
 import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.project.system.emp.domain.Emp;
+import com.aaa.project.system.emp.service.IEmpService;
 import com.aaa.project.system.faultimage.service.IFaultimageService;
 import com.aaa.project.system.faultinfo.domain.Faultinfo;
 import com.aaa.project.system.faultinfo.service.IFaultinfoService;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,19 +27,23 @@ import java.io.IOException;
 @RequestMapping("/api/fault")
 public class ApiFaultInfocontroller {
     @Autowired
+    private IEmpService empService;
+    @Autowired
     private IFaultinfoService faultinfoService;
     @Autowired
     private IFaultimageService faultimageService;
+
     /**
      * 新增或者修改隐患信息
      * @param faultinfo
      * @return
      */
     @RequestMapping(value = "/setFaultInfo",method = RequestMethod.POST)
+    @ResponseBody
     public AjaxResult setFaultInfo(Faultinfo faultinfo){
         AjaxResult ajaxResult = new AjaxResult();
         if (faultinfo.getId()==null){
-            faultinfoService.insertFaultinfo(faultinfo);
+            faultinfoService.insertInfo(faultinfo);
             ajaxResult.put("msg","添加成功");
         }else{
             faultinfoService.updateFaultinfo(faultinfo);
@@ -79,4 +82,15 @@ public class ApiFaultInfocontroller {
         ajaxResult.put("faultinfo",faultinfo);
         return ajaxResult;
     }*/
+
+    @RequestMapping("/emp")
+    @ResponseBody
+    public AjaxResult selectEmpByphone(String phone){
+        AjaxResult ajaxResult = new AjaxResult();
+        Emp emp = empService.selectEmpByphone(phone);
+        ajaxResult.put("code",0);
+        ajaxResult.put("msg",emp);
+        return ajaxResult;
+    }
+
 }

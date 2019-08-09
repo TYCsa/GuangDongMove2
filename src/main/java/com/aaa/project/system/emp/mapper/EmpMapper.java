@@ -27,7 +27,19 @@ public interface EmpMapper
      */
 	public List<Emp> selectEmpList(Emp emp);
 
+	/**
+	 * 登录
+	 * @param emp
+	 * @return
+	 */
 	Emp selectEmp(Emp emp);
+
+	/**
+	 * 根据巡检人员的手机号查询他的信息
+	 * @param phone
+	 * @return
+	 */
+	Emp selectEmpByphone(String phone);
 	/**
      * 新增代维公司代维人员
      * 
