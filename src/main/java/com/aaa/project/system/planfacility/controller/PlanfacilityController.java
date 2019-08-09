@@ -47,7 +47,7 @@ public class PlanfacilityController extends BaseController
 	/**
 	 * 查询计划_设备列表
 	 */
-	@RequiresPermissions("system:planfacility:list")
+	@RequiresPermissions("system:planfacility:view")
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(Planfacility planfacility)
