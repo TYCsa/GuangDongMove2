@@ -55,7 +55,12 @@ public class FaultinfoServiceImpl implements IFaultinfoService
 	{
 	    return faultinfoMapper.insertFaultinfo(faultinfo);
 	}
-	
+
+	@Override
+	public int insertInfo(Faultinfo faultinfo) {
+		return faultinfoMapper.insertInfo(faultinfo);
+	}
+
 	/**
      * 修改隐患
      * 

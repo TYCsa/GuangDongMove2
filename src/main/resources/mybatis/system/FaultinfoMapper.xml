@@ -53,7 +53,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="problem != null  and problem != ''  ">#{problem},</if>
          </trim>
     </insert>
-	 
+    <insert id="insertInfo" parameterType="Faultinfo">
+        insert into faultinfo (standard_id,res_id,empno,severty,problem) values(#{standardId},#{resId},#{empno},#{severty},#{problem})
+    </insert>
+
     <update id="updateFaultinfo" parameterType="Faultinfo">
         update faultinfo
         <trim prefix="SET" suffixOverrides=",">

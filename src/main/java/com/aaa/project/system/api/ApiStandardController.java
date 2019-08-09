@@ -26,6 +26,7 @@ public class ApiStandardController {
     @ResponseBody
     public List<Standard> selectStandard(){
         List<Standard> standardList = standardService.selectStandardfindAll();
+        System.out.println(standardList);
         return standardList;
     }
 }

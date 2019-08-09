@@ -28,9 +28,10 @@ import java.util.Map;
 @RequestMapping("/api/plan")
 public class ApiPlanController {
     @Autowired
-    private IPlanService planService;
-    @Autowired
     private IEmpService empService;
+    @Autowired
+    private IPlanService planService;
+
     @Autowired
     private IPlanfacilityService planfacilityService;
     /**
@@ -40,9 +41,9 @@ public class ApiPlanController {
      */
     @RequestMapping("/findAllList")
     @ResponseBody
-    public List<Plan> findALlList(){
-        List<Plan> allList = planService.findAllList();
-        return allList;
+    public List<Plan> findALlList(Plan plan){
+        List<Plan> list = planService.selectPlanList(plan);
+        return list;
     }
     /**
      * 根据计划ID资源编号查询站点名称
@@ -62,6 +63,7 @@ public class ApiPlanController {
     @RequestMapping("/updateStatus/{id}")
     @ResponseBody
     public AjaxResult updateStatus(@PathVariable("id") Integer id){
+
         Planfacility planfacility = new Planfacility();
         planfacility.setSignTime(new Date());
         planfacility.setStatus(2);
@@ -72,6 +74,18 @@ public class ApiPlanController {
         ajaxResult.put("msg","修改成功");
         ajaxResult.put("id",id);
         return ajaxResult;
+    }
+
+    /**
+     * 未巡检状态下的查看详情
+     * @param planfacility
+     * @return
+     */
+    @RequestMapping("/checkDetail")
+    @ResponseBody
+    public List<Planfacility> selectPlanfacilityList(Planfacility planfacility){
+        List<Planfacility> planfacilityList = planfacilityService.selectPlanfacilityList(planfacility);
+        return planfacilityList;
     }
 
     @RequestMapping("/updateTask/{id}")

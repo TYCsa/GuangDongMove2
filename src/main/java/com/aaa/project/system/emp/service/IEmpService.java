@@ -19,8 +19,20 @@ public interface IEmpService
      */
 	public Emp selectEmpById(Integer empno);
 
+	/**
+	 * 巡检人员登录
+	 * @param phone
+	 * @param password
+	 * @return
+	 */
 	boolean empLogin(String phone,String password);
-	
+
+	/**
+	 * 根据巡检人员的手机号查询他的信息
+	 * @param phone
+	 * @return
+	 */
+	Emp selectEmpByphone(String phone);
 	/**
      * 查询代维公司代维人员列表
      * 
