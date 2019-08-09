@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select count(res_id) from taskinfo
     </select>
     <select id="selectFaultinfoCount" resultType="java.lang.Integer">
-        select count(res_id) from faultinfo
+        select count(id) from faultinfo
     </select>
 
 
@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select count(t.res_id) from taskinfo t LEFT JOIN networkresource n on t.res_id=n.res_id where res_city=0755
     </select>
     <select id="selectFaultinfoCountByCondition" resultType="java.lang.Integer">
-        select count(f.res_id) from faultinfo f LEFT JOIN networkresource n on f.res_id=n.res_id where res_city=0755
+        select count(id) from faultinfo f LEFT JOIN networkresource n on f.res_id=n.res_id where res_city=0755
     </select>
 
 
